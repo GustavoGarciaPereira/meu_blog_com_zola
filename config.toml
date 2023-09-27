@@ -1,0 +1,22 @@
+# The base URL of the site.
+base_url = "https://gustavogarciapereira.github.io/"
+
+# To avoid problems with some variables due to multilingual support,
+# you will find repeated variables in the language section,
+# it is recommended that you keep those of your language and the general
+# ones with the same data.
+
+# To find a detailed description of the following configuration variables
+# you can go to https://www.getzola.org/documentation/getting-started/configuration/
+
+output_dir = "public"
+
+build_search_index = true
+generate_feed = true
+
+# feed_limit = 20
+
+compile_sass = false
+
+minify_html = false
+hard_link_static = false

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
 	<title></title>
-	<link href="http://127.0.0.1:5500/atom.xml" rel="self" type="application/atom+xml"/>
-  <link href="http://127.0.0.1:5500"/>
+	<link href="https://gustavogarciapereira.github.io/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://gustavogarciapereira.github.io/"/>
 	<generator uri="https://www.getzola.org/">Zola</generator>
 	<updated>2019-11-27T00:00:00+00:00</updated>
-	<id>http://127.0.0.1:5500/atom.xml</id>
+	<id>https://gustavogarciapereira.github.io/atom.xml</id>
 	<entry xml:lang="en">
 		<title>My first post</title>
 		<published>2019-11-27T00:00:00+00:00</published>
 		<updated>2019-11-27T00:00:00+00:00</updated>
-		<link rel="alternate" href="http://127.0.0.1:5500/blog/first/" type="text/html"/>
-		<id>http://127.0.0.1:5500/blog/first/</id>
+		<link href="https://gustavogarciapereira.github.io/blog/first/" type="text/html"/>
+		<id>https://gustavogarciapereira.github.io/blog/first/</id>
 		<content type="html">&lt;p&gt;This is my first blog post.&lt;&#x2F;p&gt;
 </content>
 	</entry>

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://gustavogarciapereira.github.io/sitemap.xml

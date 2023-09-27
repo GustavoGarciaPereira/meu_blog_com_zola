@@ -1,5 +1,5 @@
 # The base URL of the site.
-base_url = "http://127.0.0.1:5500"
+base_url = "https://gustavogarciapereira.github.io/"
 
 # To avoid problems with some variables due to multilingual support,
 # you will find repeated variables in the language section,

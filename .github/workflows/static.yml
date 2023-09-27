@@ -16,9 +16,13 @@ concurrency:
 
 jobs:
   deploy:
+    # environment:
+    #   name: github-pages
+    #   url: ${{ steps.deployment.outputs.page_url }}
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: https://GustavoGarciaPereira.github.io/meu_blog_com_zola/
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

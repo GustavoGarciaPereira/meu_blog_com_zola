@@ -1,3 +1,4 @@
 User-agent: *
+Disallow:
 Allow: /
 Sitemap: https://gustavogarciapereira.github.io/meu_blog_com_zola/sitemap.xml

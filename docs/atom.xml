@@ -10,7 +10,7 @@
 		<title>My first post</title>
 		<published>2019-11-27T00:00:00+00:00</published>
 		<updated>2019-11-27T00:00:00+00:00</updated>
-		<link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/first/" type="text/html"/>
+		<link rel="alternate" href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/first/" type="text/html"/>
 		<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/first/</id>
 		<content type="html">&lt;p&gt;This is my first blog post.&lt;&#x2F;p&gt;
 </content>

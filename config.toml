@@ -1,5 +1,5 @@
 # The base URL of the site.
-base_url = "https://gustavogarciapereira.github.io/"
+base_url = "https://gustavogarciapereira.github.io/meu_blog_com_zola/"
 
 # To avoid problems with some variables due to multilingual support,
 # you will find repeated variables in the language section,

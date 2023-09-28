@@ -23,4 +23,4 @@ hard_link_static = false
 
 
 [extra]
-title_pic = "https://gustavogarciapereira.github.io/meu_blog_com_zola/favicon.ico"
+title_pic = "/favicon.ico"

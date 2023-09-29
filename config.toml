@@ -21,6 +21,5 @@ compile_sass = false
 minify_html = false
 hard_link_static = false
 
-
 [extra]
 title_pic = "/favicon.ico"

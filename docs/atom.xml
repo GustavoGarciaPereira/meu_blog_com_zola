@@ -4,15 +4,37 @@
 	<link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/atom.xml" rel="self" type="application/atom+xml"/>
   <link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/"/>
 	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2019-11-27T00:00:00+00:00</updated>
+	<updated>2023-09-28T00:00:00+00:00</updated>
 	<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Post Sobre Geogebra</title>
+		<published>2023-09-28T00:00:00+00:00</published>
+		<updated>2023-09-28T00:00:00+00:00</updated>
+		<link rel="alternate" href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/terceiro/" type="text/html"/>
+		<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/terceiro/</id>
+		<content type="html">&lt;p&gt;Aqui esta com exemplo de post de blog usando JavaScript e geogebra
+em breve mais posts sobre&lt;&#x2F;p&gt;
+</content>
+	</entry>
 	<entry xml:lang="en">
 		<title>My first post</title>
 		<published>2019-11-27T00:00:00+00:00</published>
 		<updated>2019-11-27T00:00:00+00:00</updated>
 		<link rel="alternate" href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/first/" type="text/html"/>
 		<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/first/</id>
-		<content type="html">&lt;p&gt;This is my first blog post.&lt;&#x2F;p&gt;
+		<content type="html">&lt;p&gt;No vasto universo das ferramentas de construção de sites estáticos,
+o Zola tem vindo a destacar-se como uma opção poderosa e eficiente.
+Construído na linguagem de programação Rust, o Zola é conhecido pela
+sua velocidade impressionante e pela sua abordagem integrada que combina
+um motor de templates e um servidor de conteúdos estáticos. Ao contrário de
+outras ferramentas que requerem a integração de componentes adicionais para a
+renderização ou otimização de conteúdos, o Zola oferece tudo de forma nativa.
+Isto significa que os desenvolvedores e designers podem concentrar-se em criar
+conteúdo impressionante sem se preocuparem com a complexidade técnica.
+Com uma curva de aprendizado suave e uma comunidade ativa, o Zola tem tudo para se
+tornar a ferramenta de escolha para muitos profissionais e entusiastas do web design.
+Se você está buscando uma ferramenta para construir um site estático que seja rápido,
+seguro e fácil de usar, vale a pena dar uma olhada no Zola.&lt;&#x2F;p&gt;
 </content>
 	</entry>
 </feed>

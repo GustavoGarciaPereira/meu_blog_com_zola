@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  {{ page.title }}
+</h1>
+
+<p class="subtitle"><strong>{{ page.date }}</strong></p>
+{{ page.content | safe }}
+<script src="https://www.geogebra.org/apps/deployggb.js"></script>
+<div id="ggb-element"></div>
+<script>
+    var ggbApp = new GGBApplet({
+        "appName": "classic",
+        "width": 800,
+        "height": 600,
+        "showToolBar": true,
+        "showMenuBar": true,
+        "showAlgebraInput": true,
+        "useBrowserForJS": false,
+        "appletOnLoad": appletIsReady
+    }, true);
+    var isAppletReady = false;
+
+    function appletIsReady() {
+        isAppletReady = true;
+        console.log("Applet do GeoGebra carregado!");
+    }
+
+
+    ggbApp.inject('ggb-element');
+
+    function addPoint() {
+        if (!isAppletReady) {
+            console.warn("O applet do GeoGebra ainda não está carregado.");
+            return;
+        }
+        
+        var x = Math.random() * 2;
+        var y = Math.random() * 2;
+        //"api2.evalCommand('f(x)=(1/2)*sin('x')')"
+        var api2 = ggbApp.getAppletObject(); 
+        api2.evalCommand(`f(x)=${y}*sin(x)`);
+        api2.evalCommand(`g(x)=${y}*cos(x)`);
+        sendPointToServer(x, y);
+    }
+    function sendPointToServer(x, y) {
+        console.log(x,y)
+        fetch("/point/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                x: x,
+                y: y
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                console.log("Ponto enviado com sucesso!");
+            }
+        });
+
+    }
+    
+</script>
+<p>Click <a href="{{ get_url(path='@/blog/_index.md') }}">here</a> Para ler mais.</p>
+{% endblock content %}

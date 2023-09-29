@@ -27,7 +27,10 @@ Navegue até o diretório do projeto e execute:
 Copy code
 ```bash
 zola serve
-Isso iniciará um servidor local e você poderá visualizar o site em http://127.0.0.1:1111/.
+```
+Isso iniciará um servidor local e você poderá visualizar o site em 
+```bash
+http://127.0.0.1:1111/.
 ```
 ### Como Contribuir
 

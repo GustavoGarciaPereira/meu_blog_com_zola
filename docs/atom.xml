@@ -7,6 +7,30 @@
 	<updated>2023-09-30T00:00:00+00:00</updated>
 	<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/atom.xml</id>
 	<entry xml:lang="en">
+		<title>Sen Cos Tg</title>
+		<published>2023-09-30T00:00:00+00:00</published>
+		<updated>2023-09-30T00:00:00+00:00</updated>
+		<link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/geogebrasencostg/" type="text/html"/>
+		<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/geogebrasencostg/</id>
+		<content type="html">&lt;p&gt;Aqui está uma atividade que estava realizando no Geogebra:&lt;br&gt;
+A ideia é a seguinte:&lt;br&gt;
+Cos(x + a), Sen(x + a), Tg(x + a)&lt;br&gt;
+Onde
+a é uma variável que varia em um intervalo específico de 
+[−5; 5].&lt;br&gt;
+A manipulação do valor de a permite observar diferentes translações e transformações nas funções trigonométricas.&lt;br&gt;
+Essa abordagem ajuda a entender melhor o comportamento e as propriedades dessas funções.&lt;br&gt;
+Fiquei surpreso com alguns padrões e insights que surgiram ao fazer isso.&lt;br&gt;
+Recomendo essa experimentação para quem deseja aprofundar seus conhecimentos em trigonometria.&lt;br&gt;&lt;&#x2F;p&gt;
+&lt;iframe
+    src=&quot;https:&#x2F;&#x2F;www.geogebra.org&#x2F;calculator&#x2F;xetkrkh3?embed&quot;
+    width=&quot;800&quot; height=&quot;600&quot; allowfullscreen
+    style=&quot;border: 1px solid #e4e4e4;border-radius: 4px;&quot;
+    frameborder=&quot;0&quot;&gt;
+&lt;&#x2F;iframe&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
 		<title>IoT</title>
 		<published>2023-09-30T00:00:00+00:00</published>
 		<updated>2023-09-30T00:00:00+00:00</updated>

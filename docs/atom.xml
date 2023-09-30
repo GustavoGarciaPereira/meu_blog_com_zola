@@ -4,14 +4,28 @@
 	<link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/atom.xml" rel="self" type="application/atom+xml"/>
   <link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/"/>
 	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2023-09-28T00:00:00+00:00</updated>
+	<updated>2023-09-30T00:00:00+00:00</updated>
 	<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/atom.xml</id>
+	<entry xml:lang="en">
+		<title>IoT</title>
+		<published>2023-09-30T00:00:00+00:00</published>
+		<updated>2023-09-30T00:00:00+00:00</updated>
+		<link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/iot/" type="text/html"/>
+		<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/iot/</id>
+		<content type="html">&lt;p&gt;Introdução:
+A era digital tem sido palco de inúmeras inovações, mas uma das mais transformadoras é, sem dúvida, a Internet das Coisas (IoT). Esta tecnologia, que se refere à conexão de dispositivos cotidianos à internet, promete revolucionar não apenas a forma como interagimos com os objetos ao nosso redor, mas também como vivemos, trabalhamos e nos relacionamos em sociedade.&lt;&#x2F;p&gt;
+&lt;p&gt;Pequeno Parágrafo:
+A IoT está em plena ascensão e já se faz presente em nossas vidas de maneiras que muitas vezes nem percebemos. Seja em geladeiras que nos avisam quando os alimentos estão acabando, termostatos que ajustam a temperatura de nossa casa antes mesmo de chegarmos, ou em cidades inteligentes que otimizam o fluxo de tráfego e a gestão de recursos, a IoT está trazendo uma nova era de conveniência e eficiência. Além disso, com a crescente integração de sensores e dispositivos, há um vasto potencial para inovações ainda mais disruptivas no futuro.&lt;&#x2F;p&gt;
+&lt;p&gt;Conclusão:
+Em resumo, a Internet das Coisas não é apenas uma tendência tecnológica passageira, mas sim uma mudança fundamental na forma como a tecnologia será integrada em nosso cotidiano. À medida que avançamos para um mundo cada vez mais conectado, é essencial compreender e adaptar-se a essa revolução, garantindo que suas promessas sejam cumpridas de maneira segura, ética e benéfica para todos.&lt;&#x2F;p&gt;
+</content>
+	</entry>
 	<entry xml:lang="en">
 		<title>Post Sobre Geogebra</title>
 		<published>2023-09-28T00:00:00+00:00</published>
 		<updated>2023-09-28T00:00:00+00:00</updated>
-		<link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/terceiro/" type="text/html"/>
-		<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/terceiro/</id>
+		<link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/geogebra/" type="text/html"/>
+		<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/geogebra/</id>
 		<content type="html">&lt;p&gt;Aqui esta com exemplo de post de blog usando JavaScript e geogebra
 em breve mais posts sobre&lt;&#x2F;p&gt;
 </content>

@@ -30,8 +30,14 @@ def pdf_to_txt(pdf_path, txt_path):
 
 # Usando a função para converter um arquivo PDF em TXT
 pdf_to_txt(
-    './1_Publicacoes_Pronunciamentos-Técnicos-Contábeis.pdf',
-    'saida_1_livro_CPC2.txt'
+    'caminho_entrada.pdf',
+    'caminho_saida.txt'
 )
 
+```
+
+console de saida
+
+```python
+Convertendo PDF para TXT: 100%|████████| 1210/1210 [00:09<00:00, 131.26página/s]
 ```

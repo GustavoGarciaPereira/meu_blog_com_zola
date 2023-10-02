@@ -5,7 +5,7 @@ draft = false
 
 Recentemente, me deparei com um desafio: converter um arquivo PDF para TXT.<br>
 No entanto, eu não queria apenas uma conversão simples. <br>
-esejava implementar uma solução que me permitisse aplicar filtros iniciais, mas que também fosse flexível o suficiente para permitir customizações futuras.<br> 
+Desejava implementar uma solução que me permitisse aplicar filtros adicionais, mas que também fosse flexível o suficiente para permitir customizações futuras.<br> 
 Após algumas pesquisas e testes, desenvolvi o seguinte script:<br>
 
 ```python

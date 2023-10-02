@@ -14,7 +14,7 @@
 		<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/automacao/</id>
 		<content type="html">&lt;p&gt;Recentemente, me deparei com um desafio: converter um arquivo PDF para TXT.&lt;br&gt;
 No entanto, eu não queria apenas uma conversão simples. &lt;br&gt;
-esejava implementar uma solução que me permitisse aplicar filtros iniciais, mas que também fosse flexível o suficiente para permitir customizações futuras.&lt;br&gt; 
+Desejava implementar uma solução que me permitisse aplicar filtros adicionais, mas que também fosse flexível o suficiente para permitir customizações futuras.&lt;br&gt; 
 Após algumas pesquisas e testes, desenvolvi o seguinte script:&lt;br&gt;&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;python&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;import PyPDF2
 from tqdm import tqdm

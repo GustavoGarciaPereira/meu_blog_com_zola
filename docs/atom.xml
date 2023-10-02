@@ -37,10 +37,13 @@ def pdf_to_txt(pdf_path, txt_path):
 
 # Usando a função para converter um arquivo PDF em TXT
 pdf_to_txt(
-    &#x27;.&#x2F;1_Publicacoes_Pronunciamentos-Técnicos-Contábeis.pdf&#x27;,
-    &#x27;saida_1_livro_CPC2.txt&#x27;
+    &#x27;caminho_entrada.pdf&#x27;,
+    &#x27;caminho_saida.txt&#x27;
 )
 
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;console de saida&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;Convertendo PDF para TXT: 100%|████████| 1210&#x2F;1210 [00:09&lt;00:00, 131.26página&#x2F;s]
 &lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 </content>
 	</entry>

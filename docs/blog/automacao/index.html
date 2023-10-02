@@ -27,25 +27,39 @@
       <div class="container">
         
 <h1 class="title">
-  Sen Cos Tg
+  Automação com python
 </h1>
-<p class="subtitle"><strong>2023-09-30</strong></p>
-<p>Aqui está uma atividade que estava realizando no Geogebra:<br>
-A ideia é a seguinte:<br>
-Cos(x + a), Sen(x + a), Tg(x + a)<br>
-Onde
-a é uma variável que varia em um intervalo específico de 
-[−5; 5].<br>
-A manipulação do valor de a permite observar diferentes translações e transformações nas funções trigonométricas.<br>
-Essa abordagem ajuda a entender melhor o comportamento e as propriedades dessas funções.<br>
-Fiquei surpreso com alguns padrões e insights que surgiram ao fazer isso.<br>
-Recomendo essa experimentação para quem deseja aprofundar seus conhecimentos em trigonometria.<br></p>
-<iframe
-    src="https://www.geogebra.org/calculator/xetkrkh3?embed"
-    width="800" height="600" allowfullscreen
-    style="border: 1px solid #e4e4e4;border-radius: 4px;"
-    frameborder="0">
-</iframe>
+<p class="subtitle"><strong>2023-10-02</strong></p>
+<p>Recentemente, me deparei com um desafio: converter um arquivo PDF para TXT.<br>
+No entanto, eu não queria apenas uma conversão simples. <br>
+esejava implementar uma solução que me permitisse aplicar filtros iniciais, mas que também fosse flexível o suficiente para permitir customizações futuras.<br> 
+Após algumas pesquisas e testes, desenvolvi o seguinte script:<br></p>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python">import PyPDF2
+from tqdm import tqdm
+
+
+def pdf_to_txt(pdf_path, txt_path):
+    with open(pdf_path, 'rb') as file:
+        # Criando um objeto PDF reader
+        pdf_reader = PyPDF2.PdfReader(file)
+
+        # Extraindo texto de cada página
+        text = ""
+        for page in tqdm(pdf_reader.pages, desc="Convertendo PDF para TXT", unit="página"):
+            text += page.extract_text()
+
+    # Salvando o texto em um arquivo .txt
+    with open(txt_path, 'w', encoding='utf-8') as txt_file:
+        txt_file.write(text)
+
+
+# Usando a função para converter um arquivo PDF em TXT
+pdf_to_txt(
+    './1_Publicacoes_Pronunciamentos-Técnicos-Contábeis.pdf',
+    'saida_1_livro_CPC2.txt'
+)
+
+</code></pre>
 
 
 <p>Click <a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/">here</a> Para ler mais.</p>

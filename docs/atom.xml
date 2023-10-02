@@ -4,8 +4,46 @@
 	<link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/atom.xml" rel="self" type="application/atom+xml"/>
   <link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/"/>
 	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2023-09-30T00:00:00+00:00</updated>
+	<updated>2023-10-02T00:00:00+00:00</updated>
 	<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Automação com python</title>
+		<published>2023-10-02T00:00:00+00:00</published>
+		<updated>2023-10-02T00:00:00+00:00</updated>
+		<link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/automacao/" type="text/html"/>
+		<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/automacao/</id>
+		<content type="html">&lt;p&gt;Recentemente, me deparei com um desafio: converter um arquivo PDF para TXT.&lt;br&gt;
+No entanto, eu não queria apenas uma conversão simples. &lt;br&gt;
+esejava implementar uma solução que me permitisse aplicar filtros iniciais, mas que também fosse flexível o suficiente para permitir customizações futuras.&lt;br&gt; 
+Após algumas pesquisas e testes, desenvolvi o seguinte script:&lt;br&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;import PyPDF2
+from tqdm import tqdm
+
+
+def pdf_to_txt(pdf_path, txt_path):
+    with open(pdf_path, &#x27;rb&#x27;) as file:
+        # Criando um objeto PDF reader
+        pdf_reader = PyPDF2.PdfReader(file)
+
+        # Extraindo texto de cada página
+        text = &quot;&quot;
+        for page in tqdm(pdf_reader.pages, desc=&quot;Convertendo PDF para TXT&quot;, unit=&quot;página&quot;):
+            text += page.extract_text()
+
+    # Salvando o texto em um arquivo .txt
+    with open(txt_path, &#x27;w&#x27;, encoding=&#x27;utf-8&#x27;) as txt_file:
+        txt_file.write(text)
+
+
+# Usando a função para converter um arquivo PDF em TXT
+pdf_to_txt(
+    &#x27;.&#x2F;1_Publicacoes_Pronunciamentos-Técnicos-Contábeis.pdf&#x27;,
+    &#x27;saida_1_livro_CPC2.txt&#x27;
+)
+
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+	</entry>
 	<entry xml:lang="en">
 		<title>Sen Cos Tg</title>
 		<published>2023-09-30T00:00:00+00:00</published>

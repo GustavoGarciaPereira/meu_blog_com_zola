@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;favicon.ico">
+    <script charset="UTF-8" src="//web.webpushs.com/js/push/939e2182ad02279e75eae0ea7b3794fb_1.js" async></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0NC0GBBD5W"></script>
+    <style>
+      li{
+        padding: 10px 1px 1px 1px;
+        background-color: rgba(95, 102, 168, 0.295);
+      }
+      a:link {
+        color: rgb(211, 211, 253);
+        text-decoration: none;
+      }
+      a:visited {
+        color: rgb(206, 206, 253);
+        text-decoration: none;
+      }
+      a:hover {
+        color: rgb(255, 202, 211);
+        text-decoration: none;
+      }
+      
+
+      body{
+        /*background-image: url('https://cdn.pixabay.com/photo/2023/09/16/17/13/cat-8257177_1280.jpg');*/
+
+        background-image: linear-gradient(rgba(0, 0, 0, 0.178), rgba(0, 0, 0, 0.288)), url('https://img.freepik.com/vetores-gratis/zoom-de-velocidade-de-tubulacao-de-luz-azul-abstrato-na-tecnologia-de-fundo-preto_1142-9980.jpg?w=1380&t=st=1696908769~exp=1696909369~hmac=46388038baffb6307206a01bd53574f2918d183215535ce08b2c3a5ad850f5a8');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+        
+      }
+      p, .title {
+        color: rgb(255, 255, 255);
+      }
+      h1, h3, h4, h5, h6 {
+        color: rgb(255, 255, 255);
+      }
+      .language-python{
+        background-color: #b2bcc0a8;
+      }
+    </style>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-0NC0GBBD5W');
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MyBlog</title>
+  </head>
+  <body>
+    <section class="section">
+      <div class="container">
+        
+<h1 class="title">
+  Docker para Bioinformata
+</h1>
+<p class="subtitle"><strong>2023-10-10</strong></p>
+<p>Desvendando o Docker para Cientistas e Bioinformáticos: Por que essa ferramenta é essencial?</p>
+<h3 id="ola-caros-leitores-e-entusiastas-da-ciencia-e-bioinformatica">Olá, caros leitores e entusiastas da ciência e bioinformática!</h3>
+<p>Hoje, quero compartilhar com vocês algo revolucionário que tem transformado a maneira como executamos e compartilhamos nossas análises e pesquisas: o Docker! Se você já ouviu falar sobre ele mas ainda não entende bem o que é, ou se está se perguntando como ele pode ser relevante para seu trabalho, este post é para você.</p>
+<h3 id="o-que-e-o-docker">O que é o Docker?</h3>
+<p>Imagine que você tem uma receita mágica (ou um algoritmo incrível de bioinformática) que funciona perfeitamente em sua cozinha (ou computador). Agora, você deseja compartilhá-la com colegas de todo o mundo. Mas aí está o problema: nem todas as cozinhas (ou computadores) são iguais. Ingredientes podem variar, utensílios podem ser diferentes e o forno pode não se comportar da mesma maneira.</p>
+<p>O Docker entra em cena como uma solução para esse dilema. Ele permite que você &quot;embrulhe&quot; sua aplicação, suas dependências, bibliotecas e até mesmo o sistema operacional em um &quot;container&quot;. Esse container pode ser entendido como uma caixa mágica que tem tudo o que sua aplicação precisa para rodar. E o melhor de tudo? Ele funciona da mesma forma em qualquer &quot;cozinha&quot;!</p>
+<h2 id="por-que-o-docker-e-importante-para-cientistas-e-bioinformaticos">Por que o Docker é importante para cientistas e bioinformáticos?</h2>
+<ul>
+<li>
+<p>Reprodutibilidade: Em ciência, a capacidade de reproduzir resultados é fundamental. Com o Docker, você pode garantir que seu código e análise rodem da mesma maneira, independente do ambiente.</p>
+</li>
+<li>
+<p>Isolamento: Cansado de conflitos entre bibliotecas e dependências? Com o Docker, cada aplicação fica em seu próprio container, isolado e sem interferências.</p>
+</li>
+<li>
+<p>Compartilhamento facilitado: Se você desenvolveu uma ferramenta ou realizou uma análise e quer que colegas testem, basta compartilhar o container do Docker. Não é necessário se preocupar se eles têm o ambiente correto configurado.</p>
+</li>
+<li>
+<p>Escalabilidade: Precisa rodar sua análise em um cluster de computadores ou na nuvem? O Docker facilita esse processo, permitindo que sua aplicação seja distribuída e executada em vários lugares.</p>
+</li>
+</ul>
+<h4 id="docker-na-pratica-em-bioinformatica">Docker na prática em bioinformática</h4>
+<p>Vamos pensar em um cenário comum na bioinformática: a montagem de genomas. Existem várias ferramentas disponíveis, cada uma com suas próprias dependências e requisitos. Ao invés de gastar horas configurando o ambiente, você pode simplesmente puxar um container que já tem tudo configurado e pronto para uso.</p>
+<p>Além disso, se você desenvolveu uma nova ferramenta de análise, pode criar seu próprio container e compartilhá-lo com a comunidade. Isso facilita a adoção de sua ferramenta por outros pesquisadores e garante que ela rode corretamente em qualquer lugar.</p>
+<h3 id="conclusao">Conclusão</h3>
+<p>O Docker é uma ferramenta poderosa que traz inúmeros benefícios para cientistas e bioinformáticos. Ele simplifica o processo de configuração, garante a reproducibilidade e facilita o compartilhamento e distribuição de ferramentas e análises.</p>
+<p>Se você ainda não experimentou o Docker, recomendo que dê uma chance. Em pouco tempo, você perceberá o quanto ele pode transformar seu fluxo de trabalho e pesquisa.</p>
+<p>Até a próxima, e continue explorando e inovando! 🧬🔬🐳</p>
+<p>Gostou do post? Compartilhe suas experiências e dúvidas sobre Docker nos comentários! E não se esqueça de seguir o blog para mais insights e dicas sobre ciência e bioinformática.</p>
+
+
+<p>Click <a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/">here</a> Para ler mais.</p>
+
+      </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>

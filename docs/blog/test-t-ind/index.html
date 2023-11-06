@@ -65,15 +65,13 @@
   Desmistificando o Teste t Independente com Python
 </h1>
 <p class="subtitle"><strong>2023-11-06</strong></p>
-<p>No mundo da estatística, o teste t independente é uma ferramenta poderosa para comparar as médias de dois grupos independentes e determinar se essas diferenças são estatisticamente significativas. Como estatístico e programador sênior, quero desvendar a aplicação prática deste teste usando o Python, uma linguagem de programação amada por sua simplicidade e potência.</p>
+<p>No mundo da estatística, o teste t independente é uma ferramenta poderosa para comparar as médias de dois grupos independentes e determinar se essas diferenças são estatisticamente significativas. Como programador, quero desvendar a aplicação prática deste teste usando o Python, uma linguagem de programação amada por sua simplicidade e potência.</p>
 <p>Recentemente, me deparei com um conjunto de dados interessante onde duas listas distintas, <code>lista_A</code> e <code>lista_B</code>, representavam dois grupos independentes. Meu objetivo era verificar se a diferença entre as médias desses grupos era significativa ou não. Para isso, utilizei recursos da linguagem Python, mais especificamente as bibliotecas <code>scipy</code> e <code>statistics</code>.</p>
 <p>Primeiro, calculei as médias (<code>mediaA</code> e <code>mediaB</code>) e as variações (<code>varianzaA</code> e <code>varianzaB</code>) para cada grupo, utilizando funções como <code>mean()</code> e <code>variance()</code> da biblioteca <code>statistics</code>. A partir daí, estava equipado com as estatísticas descritivas necessárias para entender melhor os conjuntos de dados.</p>
 <p>Com esses cálculos em mãos, prossegui para a essência do teste t: calcular o valor t. A fórmula que usei é um exemplo clássico de como a estatística entra no campo da programação:</p>
-<p>pythonCopy code</p>
 <p><code>t_independente = (mediaA - mediaB) / (sqrt((varianzaA/nA) + (varianzaB/nB)))</code> </p>
 <p>Aqui, <code>nA</code> e <code>nB</code> representam o tamanho das amostras de cada grupo. Essa abordagem manual me deu um entendimento mais profundo do que está envolvido no cálculo do valor t. No entanto, no dia a dia, muitas vezes nos apoiamos em bibliotecas robustas para fazer o trabalho pesado por nós. É aí que <code>scipy</code> entra.</p>
 <p>Utilizando a função <code>ttest_ind</code> da biblioteca <code>scipy.stats</code>, eu consegui calcular o valor t e o valor p (probabilidade de observar um resultado tão extremo quanto o resultado do teste, assumindo que a hipótese nula é verdadeira) em apenas duas linhas de código:</p>
-<p>pythonCopy code</p>
 <p><code>t, p = stats.ttest_ind(group1, group2)</code> </p>
 <p>O resultado fornece uma confirmação rápida e precisa da significância estatística entre os grupos. A beleza disso é que, com Python, não precisamos nos aprofundar nos cálculos – a menos que queiramos.</p>
 <p>Para concluir meu experimento, imprimi os resultados, que revelaram a diferença entre as médias dos dois grupos e a probabilidade associada a essa diferença. Se o valor p for menor que o limiar escolhido (geralmente 0,05), podemos rejeitar a hipótese nula de que não há diferença significativa entre as médias dos grupos.</p>

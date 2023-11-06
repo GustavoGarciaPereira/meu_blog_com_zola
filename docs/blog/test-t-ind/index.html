@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;favicon.ico">
+    <script charset="UTF-8" src="//web.webpushs.com/js/push/939e2182ad02279e75eae0ea7b3794fb_1.js" async></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0NC0GBBD5W"></script>
+    <style>
+      li{
+        padding: 10px 1px 1px 1px;
+        background-color: rgba(95, 102, 168, 0.295);
+      }
+      a:link {
+        color: rgb(211, 211, 253);
+        text-decoration: none;
+      }
+      a:visited {
+        color: rgb(206, 206, 253);
+        text-decoration: none;
+      }
+      a:hover {
+        color: rgb(255, 202, 211);
+        text-decoration: none;
+      }
+      
+
+      body{
+        /*background-image: url('https://cdn.pixabay.com/photo/2023/09/16/17/13/cat-8257177_1280.jpg');*/
+
+        background-image: linear-gradient(rgba(0, 0, 0, 0.178), rgba(0, 0, 0, 0.288)),
+        url('https://gustavogarciapereira.github.io/meu_blog_com_zola/840843081452.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+        
+      }
+      p, .title {
+        color: rgb(255, 255, 255);
+      }
+      h1, h2, h3, h4, h5, h6 {
+        color: rgb(255, 255, 255);
+      }
+      .language-python{
+        background-color: #b2bcc0a8;
+      }
+    </style>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-0NC0GBBD5W');
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MyBlog</title>
+    
+  </head>
+  <body>
+    <section class="section">
+      <div class="container">
+        
+<h1 class="title">
+  Desmistificando o Teste t Independente com Python
+</h1>
+<p class="subtitle"><strong>2023-11-06</strong></p>
+<p>No mundo da estatística, o teste t independente é uma ferramenta poderosa para comparar as médias de dois grupos independentes e determinar se essas diferenças são estatisticamente significativas. Como estatístico e programador sênior, quero desvendar a aplicação prática deste teste usando o Python, uma linguagem de programação amada por sua simplicidade e potência.</p>
+<p>Recentemente, me deparei com um conjunto de dados interessante onde duas listas distintas, <code>lista_A</code> e <code>lista_B</code>, representavam dois grupos independentes. Meu objetivo era verificar se a diferença entre as médias desses grupos era significativa ou não. Para isso, utilizei recursos da linguagem Python, mais especificamente as bibliotecas <code>scipy</code> e <code>statistics</code>.</p>
+<p>Primeiro, calculei as médias (<code>mediaA</code> e <code>mediaB</code>) e as variações (<code>varianzaA</code> e <code>varianzaB</code>) para cada grupo, utilizando funções como <code>mean()</code> e <code>variance()</code> da biblioteca <code>statistics</code>. A partir daí, estava equipado com as estatísticas descritivas necessárias para entender melhor os conjuntos de dados.</p>
+<p>Com esses cálculos em mãos, prossegui para a essência do teste t: calcular o valor t. A fórmula que usei é um exemplo clássico de como a estatística entra no campo da programação:</p>
+<p>pythonCopy code</p>
+<p><code>t_independente = (mediaA - mediaB) / (sqrt((varianzaA/nA) + (varianzaB/nB)))</code> </p>
+<p>Aqui, <code>nA</code> e <code>nB</code> representam o tamanho das amostras de cada grupo. Essa abordagem manual me deu um entendimento mais profundo do que está envolvido no cálculo do valor t. No entanto, no dia a dia, muitas vezes nos apoiamos em bibliotecas robustas para fazer o trabalho pesado por nós. É aí que <code>scipy</code> entra.</p>
+<p>Utilizando a função <code>ttest_ind</code> da biblioteca <code>scipy.stats</code>, eu consegui calcular o valor t e o valor p (probabilidade de observar um resultado tão extremo quanto o resultado do teste, assumindo que a hipótese nula é verdadeira) em apenas duas linhas de código:</p>
+<p>pythonCopy code</p>
+<p><code>t, p = stats.ttest_ind(group1, group2)</code> </p>
+<p>O resultado fornece uma confirmação rápida e precisa da significância estatística entre os grupos. A beleza disso é que, com Python, não precisamos nos aprofundar nos cálculos – a menos que queiramos.</p>
+<p>Para concluir meu experimento, imprimi os resultados, que revelaram a diferença entre as médias dos dois grupos e a probabilidade associada a essa diferença. Se o valor p for menor que o limiar escolhido (geralmente 0,05), podemos rejeitar a hipótese nula de que não há diferença significativa entre as médias dos grupos.</p>
+<p>Este é um exemplo prático de como a estatística e a programação andam de mãos dadas no campo da análise de dados. Com Python, podemos simplificar os processos estatísticos complexos e tornar a análise acessível, sem sacrificar a profundidade ou a precisão. Se você está começando em estatística ou é um veterano procurando agilizar sua análise de dados, recomendo vivamente mergulhar nesse mundo onde o Python serve de ponte para a estatística aplicada.</p>
+
+
+<p>Click <a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/">here</a> Para ler mais.</p>
+
+      </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>

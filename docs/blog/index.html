@@ -8,29 +8,24 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0NC0GBBD5W"></script>
     <style>
-      li{
-        padding: 10px 1px 1px 1px;
-        background-color: rgba(95, 102, 168, 0.295);
+      .btn-high-contrast {
+        background-color: #105bb1; /* Cor de fundo azul mais escura */
+        color: #ffffff; /* Cor de texto branca */
+        border: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra leve para dar profundidade */
       }
-      a:link {
-        color: rgb(211, 211, 253);
-        text-decoration: none;
+    
+      .btn-high-contrast:hover, .btn-high-contrast:focus {
+        background-color: #004494; /* Cor de fundo ainda mais escura no hover/focus */
+        color: #ffffff; /* Mantém o texto branco */
+        box-shadow: 0 2px 4px rgb(0, 0, 0); /* Sombra um pouco mais escura para destaque */
       }
-      a:visited {
-        color: rgb(206, 206, 253);
-        text-decoration: none;
-      }
-      a:hover {
-        color: rgb(255, 202, 211);
-        text-decoration: none;
-      }
-      
 
       body{
         /*background-image: url('https://cdn.pixabay.com/photo/2023/09/16/17/13/cat-8257177_1280.jpg');*/
 
-        background-image: linear-gradient(rgba(0, 0, 0, 0.178), rgba(0, 0, 0, 0.288)),
-        url('https://gustavogarciapereira.github.io/meu_blog_com_zola/840843081452.jpg');
+        background-image: linear-gradient(rgba(0, 0, 0, 0.473), rgba(0, 0, 0, 0)),
+        url('https://gustavogarciapereira.github.io/nova_img.webp');
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-size: 100% 100%;
@@ -64,26 +59,89 @@
 <h1 class="title">
   Lista de Posts do meu pequeno Blog
 </h1>
-<ul>
-  <!-- If you are using pagination, section.pages will be empty. You need to use the paginator object -->  
+<div class="row">
   
-    <li><a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/porquetenhoblog/">Porque tenho blog?</a></li>
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Porque tenho blog?</h5>
+          <p class="card-text"></p> <!-- Assumindo que cada página tem um resumo -->
+          <a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/porquetenhoblog/" class="btn btn-high-contrast">Leia mais</a>
+        </div>
+      </div>
+    </div>
   
-    <li><a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/test-t-ind/">Desmistificando o Teste t Independente com Python</a></li>
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Desmistificando o Teste t Independente com Python</h5>
+          <p class="card-text"></p> <!-- Assumindo que cada página tem um resumo -->
+          <a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/test-t-ind/" class="btn btn-high-contrast">Leia mais</a>
+        </div>
+      </div>
+    </div>
   
-    <li><a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/docker/">Docker para Bioinformata</a></li>
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Docker para Bioinformata</h5>
+          <p class="card-text"></p> <!-- Assumindo que cada página tem um resumo -->
+          <a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/docker/" class="btn btn-high-contrast">Leia mais</a>
+        </div>
+      </div>
+    </div>
   
-    <li><a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/automacao/">Automação com python</a></li>
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Automação com python</h5>
+          <p class="card-text"></p> <!-- Assumindo que cada página tem um resumo -->
+          <a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/automacao/" class="btn btn-high-contrast">Leia mais</a>
+        </div>
+      </div>
+    </div>
   
-    <li><a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/geogebrasencostg/">Sen Cos Tg</a></li>
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Sen Cos Tg</h5>
+          <p class="card-text"></p> <!-- Assumindo que cada página tem um resumo -->
+          <a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/geogebrasencostg/" class="btn btn-high-contrast">Leia mais</a>
+        </div>
+      </div>
+    </div>
   
-    <li><a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/iot/">IoT</a></li>
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">IoT</h5>
+          <p class="card-text"></p> <!-- Assumindo que cada página tem um resumo -->
+          <a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/iot/" class="btn btn-high-contrast">Leia mais</a>
+        </div>
+      </div>
+    </div>
   
-    <li><a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/geogebra/">Post Sobre Geogebra</a></li>
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Post Sobre Geogebra</h5>
+          <p class="card-text"></p> <!-- Assumindo que cada página tem um resumo -->
+          <a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/geogebra/" class="btn btn-high-contrast">Leia mais</a>
+        </div>
+      </div>
+    </div>
   
-    <li><a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/first/">My first post</a></li>
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">My first post</h5>
+          <p class="card-text"></p> <!-- Assumindo que cada página tem um resumo -->
+          <a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/first/" class="btn btn-high-contrast">Leia mais</a>
+        </div>
+      </div>
+    </div>
   
-</ul>
+</div>
 
       </div>
     </section>

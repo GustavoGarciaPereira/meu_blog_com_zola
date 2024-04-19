@@ -23,14 +23,25 @@
 
       body{
         /*background-image: url('https://cdn.pixabay.com/photo/2023/09/16/17/13/cat-8257177_1280.jpg');*/
-
-        background-image: linear-gradient(rgba(0, 0, 0, 0.473), rgba(0, 0, 0, 0)),
+        /*
+        background-image: linear-gradient(rgba(0, 0, 0, 0.774), rgba(0, 0, 0, 0.438)),
         url('https://gustavogarciapereira.github.io/meu_blog_com_zola/nova_img.webp');
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-size: 100% 100%;
-        
+        */
+
+        background-image: linear-gradient(rgba(0, 0, 0, 0.774), rgba(0, 0, 0, 0.438)),
+        url('https://gustavogarciapereira.github.io/meu_blog_com_zola/nova_img.webp');
+        background-repeat: no-repeat;
+        background-size: cover; /* Mantém as proporções e cobre toda a área disponível */
+        background-position: center; /* Centraliza a imagem no container */
+        background-attachment: fixed; /* Fixa a imagem de fundo, útil para desktops */
+
       }
+
+
+      
       p, .title {
         color: rgb(255, 255, 255);
       }
@@ -39,6 +50,12 @@
       }
       .language-python{
         background-color: #b2bcc0a8;
+      }
+      /* Ajustes específicos para dispositivos móveis */
+      @media (max-width: 768px) {
+        body {
+          background-attachment: scroll; /* Muda para scroll em dispositivos móveis para evitar problemas de renderização */
+        }
       }
     </style>
     <script>

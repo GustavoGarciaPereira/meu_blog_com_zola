@@ -4,8 +4,20 @@
 	<link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/atom.xml" rel="self" type="application/atom+xml"/>
   <link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/"/>
 	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2024-04-18T00:00:00+00:00</updated>
+	<updated>2024-05-02T00:00:00+00:00</updated>
 	<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Texto ensasio 1</title>
+		<published>2024-05-02T00:00:00+00:00</published>
+		<updated>2024-05-02T00:00:00+00:00</updated>
+		<link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/texto-ensaio-1/" type="text/html"/>
+		<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/texto-ensaio-1/</id>
+		<content type="html">&lt;p&gt;Enquanto refletia sobre o mundo da programação, percebi que criamos uma série de mecanismos e ferramentas que, em muitos aspectos, se assemelham a um castelo de cartas erguido diante da complexidade de nossa própria existência. Este não é um exercício filosófico, mas um esforço consciente para organizar meus pensamentos, explorar como concateno ideias e como planejo construir meu futuro. Através da escrita, leitura, reflexão e discussão, enfrento o desafio de conectar conceitos complexos, o que me prepara para futuros debates políticos, por exemplo.&lt;&#x2F;p&gt;
+&lt;p&gt;Sempre que tento descrever o processo mental que envolve a construção do conhecimento, sinto uma ansiedade que me faz hesitar sobre o que colocar no papel. Este é um exercício de reflexão sobre minhas aspirações e sobre o papel que desejo desempenhar.&lt;&#x2F;p&gt;
+&lt;p&gt;Hoje, enquanto pensava sobre minha carreira como programador, me dei conta de como às vezes superestimamos desenvolvimentos tecnológicos que, a curto prazo, parecem inúteis — como algumas redes sociais. Dado o imenso poder e o alto grau de vigilância que essas plataformas exercem sobre a sociedade, por vezes me questiono sobre como podemos moderar ou até mesmo interromper esse avanço desenfreado.&lt;&#x2F;p&gt;
+&lt;p&gt;Em suma, essa reflexão serve como uma exploração do meu papel na interseção entre tecnologia, sociedade e desenvolvimento pessoal, buscando um equilíbrio entre a eficácia tecnológica e a responsabilidade ética.&lt;&#x2F;p&gt;
+</content>
+	</entry>
 	<entry xml:lang="en">
 		<title>Porque tenho blog?</title>
 		<published>2024-04-18T00:00:00+00:00</published>

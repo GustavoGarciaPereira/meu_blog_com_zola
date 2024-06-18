@@ -4,8 +4,95 @@
 	<link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/atom.xml" rel="self" type="application/atom+xml"/>
   <link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/"/>
 	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2024-05-02T00:00:00+00:00</updated>
+	<updated>2024-06-18T00:00:00+00:00</updated>
 	<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Descubra o Número Único em uma Lista: Soluções com e sem XOR</title>
+		<published>2024-06-18T00:00:00+00:00</published>
+		<updated>2024-06-18T00:00:00+00:00</updated>
+		<link rel="alternate" href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/xor/" type="text/html"/>
+		<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/xor/</id>
+		<content type="html">&lt;h3 id=&quot;encontrando-o-numero-unico-em-uma-lista-com-e-sem-xor&quot;&gt;Encontrando o Número Único em uma Lista com e sem XOR&lt;&#x2F;h3&gt;
+&lt;p&gt;Em muitos problemas de programação, é comum lidar com listas onde todos os elementos, exceto um, aparecem exatamente duas vezes. Encontrar o número único pode ser uma tarefa interessante e desafiadora. Neste post, vamos explorar duas abordagens para resolver esse problema: uma usando o operador XOR e outra usando um dicionário para contar ocorrências.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;problema&quot;&gt;Problema:&lt;&#x2F;h4&gt;
+&lt;p&gt;Dada uma lista de números onde cada número, exceto um, aparece exatamente duas vezes, encontre o número único.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Exemplo:&lt;&#x2F;strong&gt;
+Entrada: [4, 1, 2, 1, 2]&lt;br &#x2F;&gt;
+Saída: 4&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;solucao-1-usando-o-operador-xor&quot;&gt;Solução 1: Usando o Operador XOR&lt;&#x2F;h3&gt;
+&lt;p&gt;O operador XOR (ou exclusivo) é uma operação lógica que resulta em verdadeiro (ou 1) se e somente se um dos operandos for verdadeiro (ou 1), mas não ambos. Uma propriedade interessante do XOR é que A ^ A = 0 e A ^ 0 = A. Isso significa que quando você XOR todos os números da lista, os números que aparecem em pares se cancelam, e o número que aparece uma única vez permanece.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Implementação em Python:&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;def find_unique_number(nums):
+    unique_number = 0
+    for num in nums:
+        unique_number ^= num
+    return unique_number
+
+# Exemplo de uso
+nums = [4, 1, 2, 1, 2]
+unique_number = find_unique_number(nums)
+print(f&amp;quot;O número único é: {unique_number}&amp;quot;)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;Explicação:&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Inicializamos &lt;code&gt;unique_number&lt;&#x2F;code&gt; com 0.&lt;&#x2F;li&gt;
+&lt;li&gt;Iteramos sobre cada número na lista &lt;code&gt;nums&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Aplicamos o operador XOR entre &lt;code&gt;unique_number&lt;&#x2F;code&gt; e o número atual.&lt;&#x2F;li&gt;
+&lt;li&gt;Após a iteração, &lt;code&gt;unique_number&lt;&#x2F;code&gt; conterá o número que aparece apenas uma vez.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h3 id=&quot;solucao-2-usando-um-dicionario-para-contar-ocorrencias&quot;&gt;Solução 2: Usando um Dicionário para Contar Ocorrências&lt;&#x2F;h3&gt;
+&lt;p&gt;Outra abordagem eficiente é usar um dicionário (ou o objeto &lt;code&gt;Counter&lt;&#x2F;code&gt; da biblioteca &lt;code&gt;collections&lt;&#x2F;code&gt;) para contar a ocorrência de cada número na lista. Em seguida, identificamos o número que aparece apenas uma vez.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Implementação com Dicionário:&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;def find_unique_number(nums):
+    count_dict = {}
+
+    # Contar a ocorrência de cada número
+    for num in nums:
+        if num in count_dict:
+            count_dict[num] += 1
+        else:
+            count_dict[num] = 1
+
+    # Encontrar o número que aparece apenas uma vez
+    for num, count in count_dict.items():
+        if count == 1:
+            return num
+
+# Exemplo de uso
+nums = [4, 1, 2, 1, 2]
+unique_number = find_unique_number(nums)
+print(f&amp;quot;O número único é: {unique_number}&amp;quot;)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;Explicação:&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Criamos um dicionário &lt;code&gt;count_dict&lt;&#x2F;code&gt; para armazenar a contagem de cada número.&lt;&#x2F;li&gt;
+&lt;li&gt;Iteramos sobre cada número na lista e atualizamos o dicionário com a contagem de ocorrências.&lt;&#x2F;li&gt;
+&lt;li&gt;Iteramos sobre o dicionário para encontrar o número que aparece apenas uma vez.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h3 id=&quot;solucao-alternativa-com-counter-da-biblioteca-collections&quot;&gt;Solução Alternativa com &lt;code&gt;Counter&lt;&#x2F;code&gt; da Biblioteca &lt;code&gt;collections&lt;&#x2F;code&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;A biblioteca &lt;code&gt;collections&lt;&#x2F;code&gt; oferece uma maneira conveniente de contar elementos usando &lt;code&gt;Counter&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Implementação com &lt;code&gt;Counter&lt;&#x2F;code&gt;:&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;from collections import Counter
+
+def find_unique_number(nums):
+    # Contar a ocorrência de cada número usando Counter
+    count = Counter(nums)
+
+    # Encontrar o número que aparece apenas uma vez
+    for num, freq in count.items():
+        if freq == 1:
+            return num
+
+# Exemplo de uso
+nums = [4, 1, 2, 1, 2]
+unique_number = find_unique_number(nums)
+print(f&amp;quot;O número único é: {unique_number}&amp;quot;)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;conclusao&quot;&gt;Conclusão&lt;&#x2F;h3&gt;
+&lt;p&gt;Ambas as abordagens apresentadas são eficientes e possuem complexidade de tempo O(n). A escolha entre usar XOR ou um dicionário depende do contexto e das preferências pessoais. O uso de XOR é elegante e usa constante espaço adicional, enquanto o uso de um dicionário é mais intuitivo e fácil de entender, especialmente para iniciantes.&lt;&#x2F;p&gt;
+&lt;p&gt;Escolha a abordagem que melhor se adapta às suas necessidades e ao seu estilo de programação. Independentemente da escolha, você estará bem equipado para resolver este problema clássico de encontrar o número único em uma lista.&lt;&#x2F;p&gt;
+</content>
+	</entry>
 	<entry xml:lang="en">
 		<title>Texto ensasio 1</title>
 		<published>2024-05-02T00:00:00+00:00</published>

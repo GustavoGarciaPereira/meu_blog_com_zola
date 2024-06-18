@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;favicon.ico">
+    <script charset="UTF-8" src="//web.webpushs.com/js/push/939e2182ad02279e75eae0ea7b3794fb_1.js" async></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0NC0GBBD5W"></script>
+    <style>
+      .btn-high-contrast {
+        background-color: #105bb1; /* Cor de fundo azul mais escura */
+        color: #ffffff; /* Cor de texto branca */
+        border: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra leve para dar profundidade */
+      }
+    
+      .btn-high-contrast:hover, .btn-high-contrast:focus {
+        background-color: #004494; /* Cor de fundo ainda mais escura no hover/focus */
+        color: #ffffff; /* Mantém o texto branco */
+        box-shadow: 0 2px 4px rgb(0, 0, 0); /* Sombra um pouco mais escura para destaque */
+      }
+
+      body{
+        /*background-image: url('https://cdn.pixabay.com/photo/2023/09/16/17/13/cat-8257177_1280.jpg');*/
+        /*
+        background-image: linear-gradient(rgba(0, 0, 0, 0.774), rgba(0, 0, 0, 0.438)),
+        url('https://gustavogarciapereira.github.io/meu_blog_com_zola/nova_img.webp');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+        */
+
+        background-image: linear-gradient(rgba(0, 0, 0, 0.774), rgba(0, 0, 0, 0.438)),
+        url('https://gustavogarciapereira.github.io/meu_blog_com_zola/nova_img.webp');
+        background-repeat: no-repeat;
+        background-size: cover; /* Mantém as proporções e cobre toda a área disponível */
+        background-position: center; /* Centraliza a imagem no container */
+        background-attachment: fixed; /* Fixa a imagem de fundo, útil para desktops */
+
+      }
+
+
+      
+      p, .title {
+        color: rgb(255, 255, 255);
+      }
+      h1, h2, h3, h4, h5, h6 {
+        color: rgb(255, 255, 255);
+      }
+      .language-python{
+        background-color: #b2bcc0a8;
+      }
+      /* Ajustes específicos para dispositivos móveis */
+      @media (max-width: 768px) {
+        body {
+          background-attachment: scroll; /* Muda para scroll em dispositivos móveis para evitar problemas de renderização */
+        }
+      }
+    </style>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-0NC0GBBD5W');
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MyBlog</title>
+    
+  </head>
+  <body>
+    <section class="section">
+      <div class="container">
+        
+<h1 class="title">
+  Descubra o Número Único em uma Lista: Soluções com e sem XOR
+</h1>
+<p class="subtitle"><strong>2024-06-18</strong></p>
+<h3 id="encontrando-o-numero-unico-em-uma-lista-com-e-sem-xor">Encontrando o Número Único em uma Lista com e sem XOR</h3>
+<p>Em muitos problemas de programação, é comum lidar com listas onde todos os elementos, exceto um, aparecem exatamente duas vezes. Encontrar o número único pode ser uma tarefa interessante e desafiadora. Neste post, vamos explorar duas abordagens para resolver esse problema: uma usando o operador XOR e outra usando um dicionário para contar ocorrências.</p>
+<h4 id="problema">Problema:</h4>
+<p>Dada uma lista de números onde cada número, exceto um, aparece exatamente duas vezes, encontre o número único.</p>
+<p><strong>Exemplo:</strong>
+Entrada: [4, 1, 2, 1, 2]<br />
+Saída: 4</p>
+<h3 id="solucao-1-usando-o-operador-xor">Solução 1: Usando o Operador XOR</h3>
+<p>O operador XOR (ou exclusivo) é uma operação lógica que resulta em verdadeiro (ou 1) se e somente se um dos operandos for verdadeiro (ou 1), mas não ambos. Uma propriedade interessante do XOR é que A ^ A = 0 e A ^ 0 = A. Isso significa que quando você XOR todos os números da lista, os números que aparecem em pares se cancelam, e o número que aparece uma única vez permanece.</p>
+<p><strong>Implementação em Python:</strong></p>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python">def find_unique_number(nums):
+    unique_number = 0
+    for num in nums:
+        unique_number ^= num
+    return unique_number
+
+# Exemplo de uso
+nums = [4, 1, 2, 1, 2]
+unique_number = find_unique_number(nums)
+print(f&quot;O número único é: {unique_number}&quot;)
+</code></pre>
+<p><strong>Explicação:</strong></p>
+<ol>
+<li>Inicializamos <code>unique_number</code> com 0.</li>
+<li>Iteramos sobre cada número na lista <code>nums</code>.</li>
+<li>Aplicamos o operador XOR entre <code>unique_number</code> e o número atual.</li>
+<li>Após a iteração, <code>unique_number</code> conterá o número que aparece apenas uma vez.</li>
+</ol>
+<h3 id="solucao-2-usando-um-dicionario-para-contar-ocorrencias">Solução 2: Usando um Dicionário para Contar Ocorrências</h3>
+<p>Outra abordagem eficiente é usar um dicionário (ou o objeto <code>Counter</code> da biblioteca <code>collections</code>) para contar a ocorrência de cada número na lista. Em seguida, identificamos o número que aparece apenas uma vez.</p>
+<p><strong>Implementação com Dicionário:</strong></p>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python">def find_unique_number(nums):
+    count_dict = {}
+
+    # Contar a ocorrência de cada número
+    for num in nums:
+        if num in count_dict:
+            count_dict[num] += 1
+        else:
+            count_dict[num] = 1
+
+    # Encontrar o número que aparece apenas uma vez
+    for num, count in count_dict.items():
+        if count == 1:
+            return num
+
+# Exemplo de uso
+nums = [4, 1, 2, 1, 2]
+unique_number = find_unique_number(nums)
+print(f&quot;O número único é: {unique_number}&quot;)
+</code></pre>
+<p><strong>Explicação:</strong></p>
+<ol>
+<li>Criamos um dicionário <code>count_dict</code> para armazenar a contagem de cada número.</li>
+<li>Iteramos sobre cada número na lista e atualizamos o dicionário com a contagem de ocorrências.</li>
+<li>Iteramos sobre o dicionário para encontrar o número que aparece apenas uma vez.</li>
+</ol>
+<h3 id="solucao-alternativa-com-counter-da-biblioteca-collections">Solução Alternativa com <code>Counter</code> da Biblioteca <code>collections</code></h3>
+<p>A biblioteca <code>collections</code> oferece uma maneira conveniente de contar elementos usando <code>Counter</code>.</p>
+<p><strong>Implementação com <code>Counter</code>:</strong></p>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python">from collections import Counter
+
+def find_unique_number(nums):
+    # Contar a ocorrência de cada número usando Counter
+    count = Counter(nums)
+
+    # Encontrar o número que aparece apenas uma vez
+    for num, freq in count.items():
+        if freq == 1:
+            return num
+
+# Exemplo de uso
+nums = [4, 1, 2, 1, 2]
+unique_number = find_unique_number(nums)
+print(f&quot;O número único é: {unique_number}&quot;)
+</code></pre>
+<h3 id="conclusao">Conclusão</h3>
+<p>Ambas as abordagens apresentadas são eficientes e possuem complexidade de tempo O(n). A escolha entre usar XOR ou um dicionário depende do contexto e das preferências pessoais. O uso de XOR é elegante e usa constante espaço adicional, enquanto o uso de um dicionário é mais intuitivo e fácil de entender, especialmente para iniciantes.</p>
+<p>Escolha a abordagem que melhor se adapta às suas necessidades e ao seu estilo de programação. Independentemente da escolha, você estará bem equipado para resolver este problema clássico de encontrar o número único em uma lista.</p>
+
+
+<p>Click <a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/">here</a> Para ler mais.</p>
+
+      </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -14,8 +14,8 @@
     <!-- Tailwind CSS compilado -->
     <link rel="stylesheet" href="https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;css/style.css">
 
-    <!-- BASE_URL global para search.js -->
-    <script>var BASE_URL = "https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;";</script>
+    <!-- BASE_URL global para search.js (| safe impede escaping de '/' → '&#x2F;') -->
+    <script>var BASE_URL = "https://gustavogarciapereira.github.io/meu_blog_com_zola/";</script>
 
     <!-- Web Push -->
     <script charset="UTF-8" src="//web.webpushs.com/js/push/939e2182ad02279e75eae0ea7b3794fb_1.js" async></script>
@@ -30,6 +30,30 @@
     </script>
   </head>
   <body class="bg-site bg-deep-shadow text-clay-tan font-body min-h-screen">
+
+    <!-- ══════════════════════════════════════════════════════
+         NAVBAR
+         ══════════════════════════════════════════════════════ -->
+    <header class="sticky top-0 z-40 border-b border-rust-copper/20 bg-deep-shadow/90 backdrop-blur-sm">
+      <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+
+        <a href="https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;"
+           class="font-code text-xs tracking-widest text-aqua-neon/70 transition-colors hover:text-aqua-neon">
+          // SISTEMA_ONLINE
+        </a>
+
+        <button onclick="window.openSearchModal && window.openSearchModal()"
+                aria-label="Abrir busca (⌘K)"
+                class="flex items-center gap-2 rounded-sm border border-rust-copper/50 px-3 py-1.5
+                       font-code text-xs text-rust-copper transition-all duration-200
+                       hover:border-aqua-neon/60 hover:text-aqua-neon">
+          <span>// BUSCAR...</span>
+          <kbd class="rounded-sm bg-rust-copper/10 px-1 py-0.5 font-code text-[10px] leading-none">⌘K</kbd>
+        </button>
+
+      </div>
+    </header>
+    <!-- ══ FIM NAVBAR ══ -->
 
     <!-- ══════════════════════════════════════════════════════
          MODAL DE BUSCA — Command Palette (Cmd+K / Ctrl+K / /)
@@ -127,9 +151,10 @@
   </div>
   <!-- ── Fim Painel de Telemetria ─────────────────────────── -->
 
-  <!-- Conteúdo do post -->
-  <div class="prose-blog max-w-none">
-    <h3 id="encontrando-o-numero-unico-em-uma-lista-com-e-sem-xor">Encontrando o Número Único em uma Lista com e sem XOR</h3>
+  <!-- Conteúdo do post — container isolado para contraste de leitura -->
+  <div class="leitura-container bg-deep-shadow/[.98] rounded-lg border border-rust-copper/20 p-8">
+    <div class="prose-blog max-w-none">
+      <h3 id="encontrando-o-numero-unico-em-uma-lista-com-e-sem-xor">Encontrando o Número Único em uma Lista com e sem XOR</h3>
 <p>Em muitos problemas de programação, é comum lidar com listas onde todos os elementos, exceto um, aparecem exatamente duas vezes. Encontrar o número único pode ser uma tarefa interessante e desafiadora. Neste post, vamos explorar duas abordagens para resolver esse problema: uma usando o operador XOR e outra usando um dicionário para contar ocorrências.</p>
 <h4 id="problema">Problema:</h4>
 <p>Dada uma lista de números onde cada número, exceto um, aparece exatamente duas vezes, encontre o número único.</p>
@@ -209,6 +234,7 @@ print(f&quot;O número único é: {unique_number}&quot;)
 <p>Ambas as abordagens apresentadas são eficientes e possuem complexidade de tempo O(n). A escolha entre usar XOR ou um dicionário depende do contexto e das preferências pessoais. O uso de XOR é elegante e usa constante espaço adicional, enquanto o uso de um dicionário é mais intuitivo e fácil de entender, especialmente para iniciantes.</p>
 <p>Escolha a abordagem que melhor se adapta às suas necessidades e ao seu estilo de programação. Independentemente da escolha, você estará bem equipado para resolver este problema clássico de encontrar o número único em uma lista.</p>
 
+    </div>
   </div>
 
   <footer class="mt-12 pt-6 border-t border-rust-copper/30">

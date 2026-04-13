@@ -14,8 +14,8 @@
     <!-- Tailwind CSS compilado -->
     <link rel="stylesheet" href="https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;css/style.css">
 
-    <!-- BASE_URL global para search.js -->
-    <script>var BASE_URL = "https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;";</script>
+    <!-- BASE_URL global para search.js (| safe impede escaping de '/' → '&#x2F;') -->
+    <script>var BASE_URL = "https://gustavogarciapereira.github.io/meu_blog_com_zola/";</script>
 
     <!-- Web Push -->
     <script charset="UTF-8" src="//web.webpushs.com/js/push/939e2182ad02279e75eae0ea7b3794fb_1.js" async></script>
@@ -30,6 +30,30 @@
     </script>
   </head>
   <body class="bg-site bg-deep-shadow text-clay-tan font-body min-h-screen">
+
+    <!-- ══════════════════════════════════════════════════════
+         NAVBAR
+         ══════════════════════════════════════════════════════ -->
+    <header class="sticky top-0 z-40 border-b border-rust-copper/20 bg-deep-shadow/90 backdrop-blur-sm">
+      <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+
+        <a href="https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;"
+           class="font-code text-xs tracking-widest text-aqua-neon/70 transition-colors hover:text-aqua-neon">
+          // SISTEMA_ONLINE
+        </a>
+
+        <button onclick="window.openSearchModal && window.openSearchModal()"
+                aria-label="Abrir busca (⌘K)"
+                class="flex items-center gap-2 rounded-sm border border-rust-copper/50 px-3 py-1.5
+                       font-code text-xs text-rust-copper transition-all duration-200
+                       hover:border-aqua-neon/60 hover:text-aqua-neon">
+          <span>// BUSCAR...</span>
+          <kbd class="rounded-sm bg-rust-copper/10 px-1 py-0.5 font-code text-[10px] leading-none">⌘K</kbd>
+        </button>
+
+      </div>
+    </header>
+    <!-- ══ FIM NAVBAR ══ -->
 
     <!-- ══════════════════════════════════════════════════════
          MODAL DE BUSCA — Command Palette (Cmd+K / Ctrl+K / /)
@@ -127,9 +151,10 @@
   </div>
   <!-- ── Fim Painel de Telemetria ─────────────────────────── -->
 
-  <!-- Conteúdo do post -->
-  <div class="prose-blog max-w-none">
-    <p>Recentemente, me deparei com um desafio: converter um arquivo PDF para TXT.<br>
+  <!-- Conteúdo do post — container isolado para contraste de leitura -->
+  <div class="leitura-container bg-deep-shadow/[.98] rounded-lg border border-rust-copper/20 p-8">
+    <div class="prose-blog max-w-none">
+      <p>Recentemente, me deparei com um desafio: converter um arquivo PDF para TXT.<br>
 No entanto, eu não queria apenas uma conversão simples. <br>
 Desejava implementar uma solução que me permitisse aplicar filtros adicionais, mas que também fosse flexível o suficiente para permitir customizações futuras.<br> 
 Após algumas pesquisas e testes, desenvolvi o seguinte script:<br></p>
@@ -163,6 +188,7 @@ pdf_to_txt(
 <pre data-lang="python" class="language-python "><code class="language-python" data-lang="python">Convertendo PDF para TXT: 100%|████████| 1210&#x2F;1210 [00:09&lt;00:00, 131.26página&#x2F;s]
 </code></pre>
 
+    </div>
   </div>
 
   <footer class="mt-12 pt-6 border-t border-rust-copper/30">

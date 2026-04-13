@@ -22,9 +22,9 @@ npm run css:build
 ./deploy.sh
 ```
 
-> **Importante:** sempre rodar `npm run css:build` antes de `zola build` se os templates foram alterados. O CSS gerado (`static/css/style.css`) deve ser commitado junto com o build em `docs/`.
+> **`static/css/style.css` não é commitado** — é gerado automaticamente pelo CI e localmente via `npm run css:build`. Nunca commite este arquivo.
 
-No test suite exists. CI runs `zola build` on every push to `main` via `.github/workflows/static.yml` — **the CI does not run `npm run css:build`**, so `static/css/style.css` must be kept up-to-date and committed.
+No test suite exists. The CI pipeline (`.github/workflows/static.yml`) runs on every push to `main` and executes, in order: `npm install` → `npm run css:build` → `zola build` → deploy.
 
 ## Architecture
 
@@ -41,9 +41,9 @@ assets/css/input.css  →  [tailwindcss --minify]  →  static/css/style.css
 ```
 
 - Source of truth: [assets/css/input.css](assets/css/input.css)
-- Output (committed): `static/css/style.css` (~14 KB minified)
-- Config: [tailwind.config.js](tailwind.config.js) — `content` scans `./templates/**/*.html` for purge
-- `node_modules/` is gitignored; run `npm install` after cloning
+- Output (gitignored): `static/css/style.css` — gerado pelo CI e localmente via `npm run css:build`
+- Config: [tailwind.config.js](tailwind.config.js) — `content` scans `./templates/**/*.html` + `./static/js/**/*.js` for purge
+- `node_modules/` e `static/css/style.css` são gitignored; rodar `npm install` após clonar
 
 ### Design System — Industrial Retro-Futurista
 
@@ -109,7 +109,7 @@ Use `template = "geogebra.html"` to create an interactive math visualization pos
 ### Static Assets
 
 `static/` contents are copied directly to `docs/` at build time:
-- `css/style.css` — CSS compilado pelo Tailwind (deve ser commitado)
+- `css/style.css` — CSS compilado pelo Tailwind (gerado em build, não commitado em `static/`)
 - `nova_img.webp` — background image referenciada via `.bg-site` no CSS
 - `840843081452.jpg`, `matrix-5028024_1920.jpg` — outras imagens
 - `favicon.ico`

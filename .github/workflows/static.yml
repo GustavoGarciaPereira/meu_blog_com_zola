@@ -3,29 +3,40 @@ name: CI
 on:
   push:
     branches:
-      - main  # Ou troque por "master" se sua branch principal for master
+      - main
 
 jobs:
   build-deploy:
-
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v2
-    
-    - name: Install Zola
-      run: |
-        curl -s -L https://github.com/getzola/zola/releases/download/v0.14.0/zola-v0.14.0-x86_64-unknown-linux-gnu.tar.gz | tar zx
-        sudo mv zola /usr/local/bin/
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-    - name: Build
-      run: zola build
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'          # reutiliza node_modules entre runs
 
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: .
+      - name: Install Node dependencies
+        run: npm install
 
+      - name: Build CSS (Tailwind)
+        run: npm run css:build
+
+      - name: Install Zola v0.14.0
+        run: |
+          curl -s -L https://github.com/getzola/zola/releases/download/v0.14.0/zola-v0.14.0-x86_64-unknown-linux-gnu.tar.gz | tar zx
+          sudo mv zola /usr/local/bin/
+
+      - name: Build site (Zola)
+        run: zola build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .

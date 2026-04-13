@@ -1,15 +1,89 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  {{ page.title }}
-</h1>
+<article>
 
-<p class="subtitle"><strong>{{ page.date }}</strong></p>
-{{ page.content | safe }}
-<script src="https://www.geogebra.org/apps/deployggb.js"></script>
-<div id="ggb-element"></div>
-<script>
+  <!-- Cabeçalho do post -->
+  <header class="mb-8">
+    <h1 class="font-heading text-4xl font-bold text-clay-tan uppercase tracking-wide leading-tight mb-4">
+      {{ page.title }}
+    </h1>
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-px bg-aqua-neon"></div>
+      <time class="font-code text-aqua-neon text-xs tracking-widest">{{ page.date }}</time>
+    </div>
+    <div class="divider-industrial"></div>
+  </header>
+
+  <!-- Painel de Telemetria -->
+  <div class="status-panel mb-6 flex flex-wrap items-center gap-x-6 gap-y-1
+              border border-rust-copper/40 bg-steel-blue/40 px-4 py-2 rounded-sm">
+
+    <span class="font-heading text-xs uppercase tracking-widest">
+      <span class="text-rust-copper">DATE:&nbsp;</span>
+      <span class="text-aqua-neon">
+        {%- if page.date -%}{{ page.date | date(format="%Y.%m.%d") }}{%- else -%}N/A{%- endif -%}
+      </span>
+    </span>
+
+    <span class="font-heading text-xs uppercase tracking-widest">
+      <span class="text-rust-copper">MODULE:&nbsp;</span>
+      <span class="text-aqua-neon">MATH_SIM</span>
+    </span>
+
+    <span class="font-heading text-xs uppercase tracking-widest">
+      <span class="text-rust-copper">STATUS:&nbsp;</span>
+      <span class="text-aqua-neon">{{ page.extra.status | default(value="ONLINE") }}</span>
+    </span>
+
+  </div>
+
+  <!-- Conteúdo Markdown do post -->
+  <div class="prose-blog max-w-none mb-8">
+    {{ page.content | safe }}
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       CONSOLE DE SIMULAÇÃO — GeoGebra
+       ══════════════════════════════════════════════════════ -->
+  <div class="console-simulacao mb-10 overflow-hidden rounded-sm border border-steel-blue">
+
+    <!-- Barra de controle superior -->
+    <div class="flex items-center justify-between border-b border-rust-copper/30 bg-steel-blue px-4 py-2">
+      <span class="font-code text-xs tracking-widest text-aqua-neon">
+        MODULE: MATH_SIM_V1_RUST_CORE
+      </span>
+      <div class="flex items-center gap-2">
+        <span class="font-code text-xs text-clay-tan/40">SIM_READY</span>
+        <!-- Indicador luminoso pulsante -->
+        <div class="h-2 w-2 rounded-full bg-aqua-neon/50 animate-pulse"
+             aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- Corpo: applet GeoGebra com borda interna -->
+    <div class="bg-deep-shadow/60 p-3">
+      <div class="overflow-x-auto rounded-sm border border-rust-copper/30">
+        <script src="https://www.geogebra.org/apps/deployggb.js"></script>
+        <div id="ggb-element"></div>
+      </div>
+    </div>
+
+    <!-- Barra de status inferior -->
+    <div class="flex items-center justify-between border-t border-rust-copper/30 bg-steel-blue/60 px-4 py-2">
+      <span class="font-code text-xs tracking-widest text-aqua-neon">
+        SIM_STATUS: ACTIVE
+      </span>
+      <button onclick="addPoint()" class="btn-neon px-3 py-1 text-xs">
+        ADD_POINT( )
+      </button>
+    </div>
+
+  </div>
+  <!-- ══ FIM CONSOLE DE SIMULAÇÃO ══ -->
+
+  <!-- Lógica GeoGebra (mantida integralmente) -->
+  <script>
     var ggbApp = new GGBApplet({
         "appName": "classic",
         "width": 800,
@@ -20,13 +94,13 @@
         "useBrowserForJS": false,
         "appletOnLoad": appletIsReady
     }, true);
+
     var isAppletReady = false;
 
     function appletIsReady() {
         isAppletReady = true;
         console.log("Applet do GeoGebra carregado!");
     }
-
 
     ggbApp.inject('ggb-element');
 
@@ -35,37 +109,35 @@
             console.warn("O applet do GeoGebra ainda não está carregado.");
             return;
         }
-        
-        var x = Math.random() * 2;
-        var y = Math.random() * 2;
-        //"api2.evalCommand('f(x)=(1/2)*sin('x')')"
-        var api2 = ggbApp.getAppletObject(); 
-        api2.evalCommand(`f(x)=${y}*sin(x)`);
-        api2.evalCommand(`g(x)=${y}*cos(x)`);
+        var x    = Math.random() * 2;
+        var y    = Math.random() * 2;
+        var api2 = ggbApp.getAppletObject();
+        api2.evalCommand("f(x)=" + y + "*sin(x)");
+        api2.evalCommand("g(x)=" + y + "*cos(x)");
         sendPointToServer(x, y);
     }
+
     function sendPointToServer(x, y) {
-        console.log(x,y)
+        console.log(x, y);
         fetch("/point/", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                x: x,
-                y: y
-            })
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ x: x, y: y })
         })
-        .then(response => response.json())
-        .then(data => {
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
             if (data.status === "success") {
                 console.log("Ponto enviado com sucesso!");
             }
         });
-
     }
-    
-</script>
-<button onclick="addPoint()">Adicionar Ponto Aleatório</button>
-<p>Click <a href="{{ get_url(path='@/blog/_index.md') }}">here</a> Para ler mais.</p>
+  </script>
+
+  <footer class="mt-4 pt-6 border-t border-rust-copper/30">
+    <a href="{{ get_url(path='@/blog/_index.md') }}" class="btn-neon">
+      ← Ver todos os posts
+    </a>
+  </footer>
+
+</article>
 {% endblock content %}

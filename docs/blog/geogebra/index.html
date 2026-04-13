@@ -1,89 +1,179 @@
 <!doctype html>
 <html lang="pt-BR">
   <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MyBlog</title>
     <link rel="icon" type="image/x-icon" href="https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;favicon.ico">
+
+    <!-- Google Fonts: Oswald (headers) · Montserrat (body) · Fira Code (mono/console) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Oswald:wght@400;500;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS compilado -->
+    <link rel="stylesheet" href="https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;css/style.css">
+
+    <!-- BASE_URL global para search.js -->
+    <script>var BASE_URL = "https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;";</script>
+
+    <!-- Web Push -->
     <script charset="UTF-8" src="//web.webpushs.com/js/push/939e2182ad02279e75eae0ea7b3794fb_1.js" async></script>
 
-    <!-- Google tag (gtag.js) -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0NC0GBBD5W"></script>
-    <style>
-      .btn-high-contrast {
-        background-color: #105bb1; /* Cor de fundo azul mais escura */
-        color: #ffffff; /* Cor de texto branca */
-        border: none;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra leve para dar profundidade */
-      }
-    
-      .btn-high-contrast:hover, .btn-high-contrast:focus {
-        background-color: #004494; /* Cor de fundo ainda mais escura no hover/focus */
-        color: #ffffff; /* Mantém o texto branco */
-        box-shadow: 0 2px 4px rgb(0, 0, 0); /* Sombra um pouco mais escura para destaque */
-      }
-
-      body{
-        /*background-image: url('https://cdn.pixabay.com/photo/2023/09/16/17/13/cat-8257177_1280.jpg');*/
-        /*
-        background-image: linear-gradient(rgba(0, 0, 0, 0.774), rgba(0, 0, 0, 0.438)),
-        url('https://gustavogarciapereira.github.io/meu_blog_com_zola/nova_img.webp');
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: 100% 100%;
-        */
-
-        background-image: linear-gradient(rgba(0, 0, 0, 0.774), rgba(0, 0, 0, 0.438)),
-        url('https://gustavogarciapereira.github.io/meu_blog_com_zola/nova_img.webp');
-        background-repeat: no-repeat;
-        background-size: cover; /* Mantém as proporções e cobre toda a área disponível */
-        background-position: center; /* Centraliza a imagem no container */
-        background-attachment: fixed; /* Fixa a imagem de fundo, útil para desktops */
-
-      }
-
-
-      
-      p, .title {
-        color: rgb(255, 255, 255);
-      }
-      h1, h2, h3, h4, h5, h6 {
-        color: rgb(255, 255, 255);
-      }
-      .language-python{
-        background-color: #b2bcc0a8;
-      }
-      /* Ajustes específicos para dispositivos móveis */
-      @media (max-width: 768px) {
-        body {
-          background-attachment: scroll; /* Muda para scroll em dispositivos móveis para evitar problemas de renderização */
-        }
-      }
-    </style>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-0NC0GBBD5W');
     </script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MyBlog</title>
-    
   </head>
-  <body>
-    <section class="section">
-      <div class="container">
-        
-<h1 class="title">
-  Post Sobre Geogebra
-</h1>
+  <body class="bg-site bg-deep-shadow text-clay-tan font-body min-h-screen">
 
-<p class="subtitle"><strong>2023-09-28</strong></p>
-<p>Aqui esta com exemplo de post de blog usando JavaScript e geogebra
+    <!-- ══════════════════════════════════════════════════════
+         MODAL DE BUSCA — Command Palette (Cmd+K / Ctrl+K / /)
+         ══════════════════════════════════════════════════════ -->
+    <div id="search-modal"
+         class="hidden fixed inset-0 z-50 flex items-start justify-center pt-[12vh] px-4"
+         role="dialog" aria-modal="true" aria-label="Busca no sistema" aria-hidden="true">
+
+      <!-- Backdrop com blur -->
+      <div class="absolute inset-0 bg-deep-shadow/80 backdrop-blur-sm"></div>
+
+      <!-- Painel CRT ──────────────────────────────────────── -->
+      <div class="relative w-full max-w-xl overflow-hidden rounded-sm
+                  border border-aqua-neon/60 bg-deep-shadow/95
+                  shadow-2xl shadow-aqua-neon/10">
+
+        <!-- Overlay de scanlines (efeito monitor CRT) -->
+        <div class="scanlines absolute inset-0 z-10 pointer-events-none"></div>
+
+        <!-- Barra de título do modal -->
+        <div class="flex items-center justify-between border-b border-rust-copper/40 px-4 py-2">
+          <span class="font-code text-xs tracking-widest text-aqua-neon/70">
+            // SYSTEM_SEARCH_v1.0
+          </span>
+          <button id="search-close"
+                  aria-label="Fechar busca"
+                  class="font-code text-xs text-clay-tan/40 transition-colors hover:text-clay-tan">
+            [ESC]
+          </button>
+        </div>
+
+        <!-- Campo de busca -->
+        <div class="flex items-center gap-2 border-b border-rust-copper/30 px-4 py-3">
+          <span class="select-none whitespace-nowrap font-code text-xs text-rust-copper">
+            // BUSCAR_NO_SISTEMA &gt;
+          </span>
+          <input id="search-input"
+                 type="text"
+                 autocomplete="off"
+                 spellcheck="false"
+                 placeholder="digite sua busca..."
+                 class="flex-1 bg-transparent font-code text-sm text-clay-tan
+                        placeholder:text-clay-tan/25 outline-none caret-aqua-neon">
+        </div>
+
+        <!-- Área de resultados -->
+        <div id="search-results" class="max-h-72 overflow-y-auto"></div>
+
+        <!-- Rodapé com hints de teclado -->
+        <div class="flex gap-5 border-t border-rust-copper/20 px-4 py-2">
+          <span class="font-code text-xs text-clay-tan/30">↵&nbsp;navegar</span>
+          <span class="font-code text-xs text-clay-tan/30">esc&nbsp;fechar</span>
+          <span class="font-code text-xs text-clay-tan/30">⌘K&nbsp;·&nbsp;/&nbsp;abrir</span>
+        </div>
+
+      </div>
+    </div>
+    <!-- ══ FIM MODAL ══ -->
+
+    <main class="relative z-10 mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
+      
+<article>
+
+  <!-- Cabeçalho do post -->
+  <header class="mb-8">
+    <h1 class="font-heading text-4xl font-bold text-clay-tan uppercase tracking-wide leading-tight mb-4">
+      Post Sobre Geogebra
+    </h1>
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-px bg-aqua-neon"></div>
+      <time class="font-code text-aqua-neon text-xs tracking-widest">2023-09-28</time>
+    </div>
+    <div class="divider-industrial"></div>
+  </header>
+
+  <!-- Painel de Telemetria -->
+  <div class="status-panel mb-6 flex flex-wrap items-center gap-x-6 gap-y-1
+              border border-rust-copper/40 bg-steel-blue/40 px-4 py-2 rounded-sm">
+
+    <span class="font-heading text-xs uppercase tracking-widest">
+      <span class="text-rust-copper">DATE:&nbsp;</span>
+      <span class="text-aqua-neon">2023.09.28</span>
+    </span>
+
+    <span class="font-heading text-xs uppercase tracking-widest">
+      <span class="text-rust-copper">MODULE:&nbsp;</span>
+      <span class="text-aqua-neon">MATH_SIM</span>
+    </span>
+
+    <span class="font-heading text-xs uppercase tracking-widest">
+      <span class="text-rust-copper">STATUS:&nbsp;</span>
+      <span class="text-aqua-neon">ONLINE</span>
+    </span>
+
+  </div>
+
+  <!-- Conteúdo Markdown do post -->
+  <div class="prose-blog max-w-none mb-8">
+    <p>Aqui esta com exemplo de post de blog usando JavaScript e geogebra
 em breve mais posts sobre</p>
 
-<script src="https://www.geogebra.org/apps/deployggb.js"></script>
-<div id="ggb-element"></div>
-<script>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       CONSOLE DE SIMULAÇÃO — GeoGebra
+       ══════════════════════════════════════════════════════ -->
+  <div class="console-simulacao mb-10 overflow-hidden rounded-sm border border-steel-blue">
+
+    <!-- Barra de controle superior -->
+    <div class="flex items-center justify-between border-b border-rust-copper/30 bg-steel-blue px-4 py-2">
+      <span class="font-code text-xs tracking-widest text-aqua-neon">
+        MODULE: MATH_SIM_V1_RUST_CORE
+      </span>
+      <div class="flex items-center gap-2">
+        <span class="font-code text-xs text-clay-tan/40">SIM_READY</span>
+        <!-- Indicador luminoso pulsante -->
+        <div class="h-2 w-2 rounded-full bg-aqua-neon/50 animate-pulse"
+             aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- Corpo: applet GeoGebra com borda interna -->
+    <div class="bg-deep-shadow/60 p-3">
+      <div class="overflow-x-auto rounded-sm border border-rust-copper/30">
+        <script src="https://www.geogebra.org/apps/deployggb.js"></script>
+        <div id="ggb-element"></div>
+      </div>
+    </div>
+
+    <!-- Barra de status inferior -->
+    <div class="flex items-center justify-between border-t border-rust-copper/30 bg-steel-blue/60 px-4 py-2">
+      <span class="font-code text-xs tracking-widest text-aqua-neon">
+        SIM_STATUS: ACTIVE
+      </span>
+      <button onclick="addPoint()" class="btn-neon px-3 py-1 text-xs">
+        ADD_POINT( )
+      </button>
+    </div>
+
+  </div>
+  <!-- ══ FIM CONSOLE DE SIMULAÇÃO ══ -->
+
+  <!-- Lógica GeoGebra (mantida integralmente) -->
+  <script>
     var ggbApp = new GGBApplet({
         "appName": "classic",
         "width": 800,
@@ -94,13 +184,13 @@ em breve mais posts sobre</p>
         "useBrowserForJS": false,
         "appletOnLoad": appletIsReady
     }, true);
+
     var isAppletReady = false;
 
     function appletIsReady() {
         isAppletReady = true;
         console.log("Applet do GeoGebra carregado!");
     }
-
 
     ggbApp.inject('ggb-element');
 
@@ -109,42 +199,41 @@ em breve mais posts sobre</p>
             console.warn("O applet do GeoGebra ainda não está carregado.");
             return;
         }
-        
-        var x = Math.random() * 2;
-        var y = Math.random() * 2;
-        //"api2.evalCommand('f(x)=(1/2)*sin('x')')"
-        var api2 = ggbApp.getAppletObject(); 
-        api2.evalCommand(`f(x)=${y}*sin(x)`);
-        api2.evalCommand(`g(x)=${y}*cos(x)`);
+        var x    = Math.random() * 2;
+        var y    = Math.random() * 2;
+        var api2 = ggbApp.getAppletObject();
+        api2.evalCommand("f(x)=" + y + "*sin(x)");
+        api2.evalCommand("g(x)=" + y + "*cos(x)");
         sendPointToServer(x, y);
     }
+
     function sendPointToServer(x, y) {
-        console.log(x,y)
+        console.log(x, y);
         fetch("/point/", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                x: x,
-                y: y
-            })
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ x: x, y: y })
         })
-        .then(response => response.json())
-        .then(data => {
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
             if (data.status === "success") {
                 console.log("Ponto enviado com sucesso!");
             }
         });
-
     }
-    
-</script>
-<button onclick="addPoint()">Adicionar Ponto Aleatório</button>
-<p>Click <a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/">here</a> Para ler mais.</p>
+  </script>
 
-      </div>
-    </section>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <footer class="mt-4 pt-6 border-t border-rust-copper/30">
+    <a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/" class="btn-neon">
+      ← Ver todos os posts
+    </a>
+  </footer>
+
+</article>
+
+    </main>
+
+    <!-- Command Palette -->
+    <script src="https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;js/search.js"></script>
   </body>
 </html>

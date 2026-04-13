@@ -1,9 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  This is my blog made with Zola.
-</h1>
-<a href="https://www.flaticon.com/br/icones-gratis/estatistica" title="estatística ícones">Estatística ícones criados por Freepik - Flaticon</a>
-<p>Click <a href="{{ get_url(path='@/blog/_index.md') }}">here</a> to see my posts.</p>
+<section class="flex min-h-[70vh] flex-col justify-center">
+  <div class="max-w-2xl">
+
+    <!-- Eyebrow label -->
+    <p class="mb-4 font-mono text-xs tracking-[0.3em] text-aqua-neon uppercase">
+      // Sistema Online
+    </p>
+
+    <!-- Hero title -->
+    <h1 class="font-heading text-6xl font-bold leading-none tracking-tight text-clay-tan uppercase md:text-8xl mb-6">
+      Meu<br>
+      <span class="text-aqua-neon">Blog</span>
+    </h1>
+
+    <!-- Decorative separator -->
+    <div class="mb-8 w-24 border-t-2 border-rust-copper"></div>
+
+    <p class="mb-10 leading-relaxed text-clay-tan/70">
+      This is my blog made with Zola.
+    </p>
+
+    <a href="{{ get_url(path='@/blog/_index.md') }}" class="btn-neon px-8 py-3 text-base">
+      Ver Posts →
+    </a>
+
+    <p class="mt-8 text-xs text-clay-tan/30">
+      <a href="https://www.flaticon.com/br/icones-gratis/estatistica"
+         title="estatística ícones"
+         class="transition-colors hover:text-clay-tan/60">
+        Estatística ícones criados por Freepik - Flaticon
+      </a>
+    </p>
+
+  </div>
+</section>
 {% endblock content %}

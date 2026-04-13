@@ -1,0 +1,31 @@
+{#- Shortcode: status — Painel de Telemetria de Post
+ -
+ - Uso no Markdown do post:
+ -   {{ status(date="2026.04.12", latency="5ms", status="ONLINE") }}
+ -
+ - Parâmetros:
+ -   date    — data exibida (string)        ex: "2026.04.12"
+ -   latency — latência exibida (string)    ex: "5ms"  | default: "--"
+ -   status  — estado do sistema (string)   ex: "ONLINE" | default: "ONLINE"
+-#}
+<div class="status-panel mb-6 flex flex-wrap items-center gap-x-6 gap-y-1
+            border border-rust-copper/40 bg-steel-blue/40 px-4 py-2 rounded-sm">
+
+  {%- if date %}
+  <span class="font-heading text-xs uppercase tracking-widest">
+    <span class="text-rust-copper">DATE:&nbsp;</span>
+    <span class="text-aqua-neon">{{ date }}</span>
+  </span>
+  {%- endif %}
+
+  <span class="font-heading text-xs uppercase tracking-widest">
+    <span class="text-rust-copper">LATENCY:&nbsp;</span>
+    <span class="text-aqua-neon">{{ latency | default(value="--") }}</span>
+  </span>
+
+  <span class="font-heading text-xs uppercase tracking-widest">
+    <span class="text-rust-copper">STATUS:&nbsp;</span>
+    <span class="text-aqua-neon">{{ status | default(value="ONLINE") }}</span>
+  </span>
+
+</div>

@@ -1,83 +1,135 @@
 <!doctype html>
 <html lang="pt-BR">
   <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MyBlog</title>
     <link rel="icon" type="image/x-icon" href="https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;favicon.ico">
+
+    <!-- Google Fonts: Oswald (headers) · Montserrat (body) · Fira Code (mono/console) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Oswald:wght@400;500;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS compilado -->
+    <link rel="stylesheet" href="https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;css/style.css">
+
+    <!-- BASE_URL global para search.js -->
+    <script>var BASE_URL = "https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;";</script>
+
+    <!-- Web Push -->
     <script charset="UTF-8" src="//web.webpushs.com/js/push/939e2182ad02279e75eae0ea7b3794fb_1.js" async></script>
 
-    <!-- Google tag (gtag.js) -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0NC0GBBD5W"></script>
-    <style>
-      .btn-high-contrast {
-        background-color: #105bb1; /* Cor de fundo azul mais escura */
-        color: #ffffff; /* Cor de texto branca */
-        border: none;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra leve para dar profundidade */
-      }
-    
-      .btn-high-contrast:hover, .btn-high-contrast:focus {
-        background-color: #004494; /* Cor de fundo ainda mais escura no hover/focus */
-        color: #ffffff; /* Mantém o texto branco */
-        box-shadow: 0 2px 4px rgb(0, 0, 0); /* Sombra um pouco mais escura para destaque */
-      }
-
-      body{
-        /*background-image: url('https://cdn.pixabay.com/photo/2023/09/16/17/13/cat-8257177_1280.jpg');*/
-        /*
-        background-image: linear-gradient(rgba(0, 0, 0, 0.774), rgba(0, 0, 0, 0.438)),
-        url('https://gustavogarciapereira.github.io/meu_blog_com_zola/nova_img.webp');
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: 100% 100%;
-        */
-
-        background-image: linear-gradient(rgba(0, 0, 0, 0.774), rgba(0, 0, 0, 0.438)),
-        url('https://gustavogarciapereira.github.io/meu_blog_com_zola/nova_img.webp');
-        background-repeat: no-repeat;
-        background-size: cover; /* Mantém as proporções e cobre toda a área disponível */
-        background-position: center; /* Centraliza a imagem no container */
-        background-attachment: fixed; /* Fixa a imagem de fundo, útil para desktops */
-
-      }
-
-
-      
-      p, .title {
-        color: rgb(255, 255, 255);
-      }
-      h1, h2, h3, h4, h5, h6 {
-        color: rgb(255, 255, 255);
-      }
-      .language-python{
-        background-color: #b2bcc0a8;
-      }
-      /* Ajustes específicos para dispositivos móveis */
-      @media (max-width: 768px) {
-        body {
-          background-attachment: scroll; /* Muda para scroll em dispositivos móveis para evitar problemas de renderização */
-        }
-      }
-    </style>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-0NC0GBBD5W');
     </script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MyBlog</title>
-    
   </head>
-  <body>
-    <section class="section">
-      <div class="container">
-        
-<h1 class="title">
-  Desmistificando o Teste t Independente com Python
-</h1>
-<p class="subtitle"><strong>2023-11-06</strong></p>
-<p>No mundo da estatística, o teste t independente é uma ferramenta poderosa para comparar as médias de dois grupos independentes e determinar se essas diferenças são estatisticamente significativas. Como programador, quero desvendar a aplicação prática deste teste usando o Python, uma linguagem de programação amada por sua simplicidade e potência.</p>
+  <body class="bg-site bg-deep-shadow text-clay-tan font-body min-h-screen">
+
+    <!-- ══════════════════════════════════════════════════════
+         MODAL DE BUSCA — Command Palette (Cmd+K / Ctrl+K / /)
+         ══════════════════════════════════════════════════════ -->
+    <div id="search-modal"
+         class="hidden fixed inset-0 z-50 flex items-start justify-center pt-[12vh] px-4"
+         role="dialog" aria-modal="true" aria-label="Busca no sistema" aria-hidden="true">
+
+      <!-- Backdrop com blur -->
+      <div class="absolute inset-0 bg-deep-shadow/80 backdrop-blur-sm"></div>
+
+      <!-- Painel CRT ──────────────────────────────────────── -->
+      <div class="relative w-full max-w-xl overflow-hidden rounded-sm
+                  border border-aqua-neon/60 bg-deep-shadow/95
+                  shadow-2xl shadow-aqua-neon/10">
+
+        <!-- Overlay de scanlines (efeito monitor CRT) -->
+        <div class="scanlines absolute inset-0 z-10 pointer-events-none"></div>
+
+        <!-- Barra de título do modal -->
+        <div class="flex items-center justify-between border-b border-rust-copper/40 px-4 py-2">
+          <span class="font-code text-xs tracking-widest text-aqua-neon/70">
+            // SYSTEM_SEARCH_v1.0
+          </span>
+          <button id="search-close"
+                  aria-label="Fechar busca"
+                  class="font-code text-xs text-clay-tan/40 transition-colors hover:text-clay-tan">
+            [ESC]
+          </button>
+        </div>
+
+        <!-- Campo de busca -->
+        <div class="flex items-center gap-2 border-b border-rust-copper/30 px-4 py-3">
+          <span class="select-none whitespace-nowrap font-code text-xs text-rust-copper">
+            // BUSCAR_NO_SISTEMA &gt;
+          </span>
+          <input id="search-input"
+                 type="text"
+                 autocomplete="off"
+                 spellcheck="false"
+                 placeholder="digite sua busca..."
+                 class="flex-1 bg-transparent font-code text-sm text-clay-tan
+                        placeholder:text-clay-tan/25 outline-none caret-aqua-neon">
+        </div>
+
+        <!-- Área de resultados -->
+        <div id="search-results" class="max-h-72 overflow-y-auto"></div>
+
+        <!-- Rodapé com hints de teclado -->
+        <div class="flex gap-5 border-t border-rust-copper/20 px-4 py-2">
+          <span class="font-code text-xs text-clay-tan/30">↵&nbsp;navegar</span>
+          <span class="font-code text-xs text-clay-tan/30">esc&nbsp;fechar</span>
+          <span class="font-code text-xs text-clay-tan/30">⌘K&nbsp;·&nbsp;/&nbsp;abrir</span>
+        </div>
+
+      </div>
+    </div>
+    <!-- ══ FIM MODAL ══ -->
+
+    <main class="relative z-10 mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
+      
+<article>
+
+  <!-- Cabeçalho do post -->
+  <header class="mb-8">
+    <h1 class="font-heading text-4xl font-bold text-clay-tan uppercase tracking-wide leading-tight mb-4">
+      Desmistificando o Teste t Independente com Python
+    </h1>
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-px bg-aqua-neon"></div>
+      <time class="font-code text-aqua-neon text-xs tracking-widest">2023-11-06</time>
+    </div>
+    <div class="divider-industrial"></div>
+  </header>
+
+  <!-- ── Painel de Telemetria (Status Panel) ─────────────── -->
+  <div class="status-panel mb-6 flex flex-wrap items-center gap-x-6 gap-y-1
+              border border-rust-copper/40 bg-steel-blue/40 px-4 py-2 rounded-sm">
+
+    <span class="font-heading text-xs uppercase tracking-widest">
+      <span class="text-rust-copper">DATE:&nbsp;</span>
+      <span class="text-aqua-neon">2023.11.06</span>
+    </span>
+
+    <span class="font-heading text-xs uppercase tracking-widest">
+      <span class="text-rust-copper">LATENCY:&nbsp;</span>
+      <span class="text-aqua-neon">--</span>
+    </span>
+
+    <span class="font-heading text-xs uppercase tracking-widest">
+      <span class="text-rust-copper">STATUS:&nbsp;</span>
+      <span class="text-aqua-neon">ONLINE</span>
+    </span>
+
+  </div>
+  <!-- ── Fim Painel de Telemetria ─────────────────────────── -->
+
+  <!-- Conteúdo do post -->
+  <div class="prose-blog max-w-none">
+    <p>No mundo da estatística, o teste t independente é uma ferramenta poderosa para comparar as médias de dois grupos independentes e determinar se essas diferenças são estatisticamente significativas. Como programador, quero desvendar a aplicação prática deste teste usando o Python, uma linguagem de programação amada por sua simplicidade e potência.</p>
 <p>Recentemente, me deparei com um conjunto de dados interessante onde duas listas distintas, <code>lista_A</code> e <code>lista_B</code>, representavam dois grupos independentes. Meu objetivo era verificar se a diferença entre as médias desses grupos era significativa ou não. Para isso, utilizei recursos da linguagem Python, mais especificamente as bibliotecas <code>scipy</code> e <code>statistics</code>.</p>
 <p>Primeiro, calculei as médias (<code>mediaA</code> e <code>mediaB</code>) e as variações (<code>varianzaA</code> e <code>varianzaB</code>) para cada grupo, utilizando funções como <code>mean()</code> e <code>variance()</code> da biblioteca <code>statistics</code>. A partir daí, estava equipado com as estatísticas descritivas necessárias para entender melhor os conjuntos de dados.</p>
 <p>Com esses cálculos em mãos, prossegui para a essência do teste t: calcular o valor t. A fórmula que usei é um exemplo clássico de como a estatística entra no campo da programação:</p>
@@ -89,11 +141,19 @@
 <p>Para concluir meu experimento, imprimi os resultados, que revelaram a diferença entre as médias dos dois grupos e a probabilidade associada a essa diferença. Se o valor p for menor que o limiar escolhido (geralmente 0,05), podemos rejeitar a hipótese nula de que não há diferença significativa entre as médias dos grupos.</p>
 <p>Este é um exemplo prático de como a estatística e a programação andam de mãos dadas no campo da análise de dados. Com Python, podemos simplificar os processos estatísticos complexos e tornar a análise acessível, sem sacrificar a profundidade ou a precisão. Se você está começando em estatística ou é um veterano procurando agilizar sua análise de dados, recomendo vivamente mergulhar nesse mundo onde o Python serve de ponte para a estatística aplicada.</p>
 
+  </div>
 
-<p>Click <a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/">here</a> Para ler mais.</p>
+  <footer class="mt-12 pt-6 border-t border-rust-copper/30">
+    <a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/" class="btn-neon">
+      ← Ver todos os posts
+    </a>
+  </footer>
 
-      </div>
-    </section>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</article>
+
+    </main>
+
+    <!-- Command Palette -->
+    <script src="https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;js/search.js"></script>
   </body>
 </html>

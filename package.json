@@ -1,0 +1,13 @@
+{
+  "name": "meu-blog-zola",
+  "version": "1.0.0",
+  "scripts": {
+    "css:build": "tailwindcss -i ./assets/css/input.css -o ./static/css/style.css --minify",
+    "css:watch": "tailwindcss -i ./assets/css/input.css -o ./static/css/style.css --watch",
+    "build": "npm run css:build && zola build",
+    "dev": "npm run css:watch & zola serve"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}

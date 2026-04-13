@@ -44,6 +44,7 @@ assets/css/input.css  →  [tailwindcss --minify]  →  static/css/style.css
 - Output (gitignored): `static/css/style.css` — gerado pelo CI e localmente via `npm run css:build`
 - Config: [tailwind.config.js](tailwind.config.js) — `content` scans `./templates/**/*.html` + `./static/js/**/*.js` for purge
 - `node_modules/` e `static/css/style.css` são gitignored; rodar `npm install` após clonar
+- Classes geradas dinamicamente em `search.js` estão na `safelist` do `tailwind.config.js`
 
 ### Design System — Industrial Retro-Futurista
 
@@ -60,36 +61,73 @@ assets/css/input.css  →  [tailwindcss --minify]  →  static/css/style.css
 **Fonts** (Google Fonts, importadas em `base.html`):
 - `font-heading` → Oswald / Barlow Condensed — headers, botões, labels
 - `font-body` → Montserrat — corpo do texto
+- `font-code` → Fira Code — navbar, modal de busca, console GeoGebra
 
-**Componentes customizados** (definidos em `@layer components` no `input.css`):
+**Componentes customizados** (`@layer components` em `assets/css/input.css`):
 
 | Classe | Descrição |
 |---|---|
 | `.btn-neon` | Botão com borda aqua-neon, fill no hover |
 | `.card-industrial` | Card steel-blue com borda cobre, glow aqua no hover |
-| `.divider-industrial` | Separador `<hr>` horizontal em rust-copper |
+| `.divider-industrial` | Separador horizontal em rust-copper |
 | `.accent-line` | Barra decorativa aqua sob títulos de seção |
-| `.prose-blog` | Estilos completos de tipografia para conteúdo de posts (p, h1-h6, a, code, pre, blockquote, table, img) |
-| `.bg-site` | Fundo com imagem + overlay escuro; troca `fixed` → `scroll` em mobile |
+| `.leitura-container` | Fundo `deep-shadow/98` ao redor do conteúdo dos posts (legibilidade) |
+| `.prose-blog` | Tipografia completa para posts: p, h1-h6, a, code, pre, blockquote, table, img |
+| `.bg-site` | Fundo com imagem + overlay escuro; `fixed` → `scroll` em mobile |
+| `.scanlines` | Efeito CRT de linhas horizontais sutis (usado no modal de busca) |
 
 ### Template System (Tera)
 
-Six templates in `templates/`:
+Templates em `templates/`:
 
 | Template | Purpose |
 |---|---|
-| `base.html` | Layout base — Google Fonts, Tailwind CSS, background, Google Analytics |
+| `base.html` | Layout base — navbar sticky, modal Command Palette, Google Fonts, Tailwind CSS, Analytics |
 | `index.html` | Home page com hero "Industrial Retro-Futurista" |
 | `blog.html` | Listagem de posts em grid responsivo de cards |
-| `blog-page.html` | Post individual com cabeçalho, data e link de retorno |
-| `geogebra.html` | Post com applet GeoGebra interativo embutido |
+| `blog-page.html` | Post individual — cabeçalho, painel de telemetria automático, `.leitura-container` |
+| `geogebra.html` | Post com Console de Simulação GeoGebra (barra de controle + indicador pulsante) |
 | `404.html` | Página de erro customizada |
+| `shortcodes/status.html` | Shortcode `{{ status(...) }}` — painel de telemetria para uso em Markdown |
 
 Templates extend `base.html` via `{% extends "base.html" %}` + `{% block content %}`.
 
+### Navbar e Command Palette
+
+**Navbar** (`base.html`): sticky no topo, exibe `// SISTEMA_ONLINE` (link para home) e um botão
+`// BUSCAR... ⌘K` que dispara `window.openSearchModal()`.
+
+**Command Palette** (`static/js/search.js`):
+- Atalhos: `Cmd+K` / `Ctrl+K` (toggle) · `/` (abre fora de inputs) · `Escape` (fecha)
+- Carrega `elasticlunr.min.js` e `search_index.en.js` sob demanda (lazy) na primeira abertura
+- `window.BASE_URL` injetado em `base.html` com `| safe` — **obrigatório** para evitar que Tera
+  HTML-escape `/` → `&#x2F;` dentro de `<script>`, quebrando todas as URLs
+- URLs construídas com `new URL(filename, baseUrl).href` para evitar problemas de concatenação
+- `window.searchIndex` (JSON serializado pelo Zola) é carregado via `elasticlunr.Index.load()`
+- `window.openSearchModal` exposto globalmente para o botão da navbar
+
+### Painel de Telemetria dos Posts
+
+Exibido automaticamente no topo de cada post em `blog-page.html` e `geogebra.html`:
+
+```
+DATE: 2024.01.15  |  LATENCY: --  |  STATUS: ONLINE
+```
+
+- `DATE` lido de `page.date` (formato `%Y.%m.%d`)
+- `LATENCY` e `STATUS` lidos de `page.extra.latency` / `page.extra.status` (frontmatter `[extra]`)
+- Shortcode `{{ status(date="...", latency="...", status="...") }}` disponível para uso em Markdown
+
+### Console de Simulação GeoGebra (`geogebra.html`)
+
+Posts com `template = "geogebra.html"` recebem um wrapper `.console-simulacao`:
+- **Barra superior**: `MODULE: MATH_SIM_V1_RUST_CORE` + indicador `animate-pulse`
+- **Corpo**: applet GeoGebra com borda interna `border-rust-copper/30`
+- **Barra inferior**: `SIM_STATUS: ACTIVE` + botão `ADD_POINT( )`
+
 ### Content Structure
 
-Posts live in `content/blog/` with TOML frontmatter (`+++` delimiters):
+Posts em `content/blog/` com frontmatter TOML (`+++`):
 
 ```toml
 +++
@@ -97,23 +135,34 @@ title = "Post Title"
 date = 2024-01-15
 draft = false
 template = "blog-page.html"   # omit to use section default
-+++
 
-Markdown content here...
+[extra]
+latency = "5ms"     # opcional — exibido no painel de telemetria
+status  = "ONLINE"  # opcional — padrão: "ONLINE"
++++
 ```
 
-Use `template = "geogebra.html"` to create an interactive math visualization post.
+Use `template = "geogebra.html"` para posts com visualizações matemáticas interativas.
 
-`content/blog/_index.md` controls the blog section: sorts by `date`, uses `blog.html` for listing and `blog-page.html` as default page template.
+`content/blog/_index.md` — controla a seção: sort by `date`, template `blog.html`, page_template `blog-page.html`.
 
 ### Static Assets
 
-`static/` contents are copied directly to `docs/` at build time:
-- `css/style.css` — CSS compilado pelo Tailwind (gerado em build, não commitado em `static/`)
-- `nova_img.webp` — background image referenciada via `.bg-site` no CSS
-- `840843081452.jpg`, `matrix-5028024_1920.jpg` — outras imagens
-- `favicon.ico`
+`static/` é copiado para `docs/` no build:
+- `css/style.css` — gerado pelo Tailwind (não commitado em `static/`, gerado no CI)
+- `js/search.js` — Command Palette (commitado)
+- `nova_img.webp` — imagem de fundo referenciada via `.bg-site`
+- `favicon.ico`, imagens diversas
 
 ### Generated Outputs (in `docs/`)
 
-Zola generates: `atom.xml` (feed), `sitemap.xml`, `robots.txt`, `search_index.en.js` + `elasticlunr.min.js` (search, though not wired to UI).
+Zola gera: `atom.xml` (feed), `sitemap.xml`, `robots.txt`, `search_index.en.js` + `elasticlunr.min.js` (usados pela Command Palette).
+
+### Armadilhas Conhecidas
+
+| Problema | Causa | Solução |
+|---|---|---|
+| URLs malformadas com `&#x2F;` | `{{ config.base_url }}` sem `\| safe` em `<script>` — Tera escapa `/` | Sempre usar `\| safe` para URLs em contexto JS |
+| `openModal()` retorna sem abrir | `DOMContentLoaded` já disparou quando script no fim do `<body>` | Usar `document.readyState === 'loading'` antes de registrar o listener |
+| Busca retorna sem resultados | `window.searchIndex` é JSON serializado, não objeto elasticlunr | Carregar com `elasticlunr.Index.load(window.searchIndex)` |
+| Classes de resultado removidas pelo purge | Tailwind não vê classes em strings JS concatenadas | Usar `safelist` no `tailwind.config.js` + incluir `static/js/**/*.js` em `content` |

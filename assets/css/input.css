@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────
+   BASE: tipografia e fundo global
+───────────────────────────────────────────── */
+@layer base {
+  body {
+    @apply font-body bg-deep-shadow text-clay-tan;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   UTILITIES: fundo com imagem + overlay escuro
+───────────────────────────────────────────── */
+@layer utilities {
+  /* Efeito scanlines CRT — linhas horizontais sutis sobre o modal de busca */
+  .scanlines {
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 181, 181, 0.04) 2px,
+      rgba(0, 181, 181, 0.04) 4px
+    );
+    pointer-events: none;
+  }
+
+  .bg-site {
+    background-image:
+      linear-gradient(rgba(32, 20, 13, 0.82), rgba(32, 20, 13, 0.55)),
+      url('https://gustavogarciapereira.github.io/meu_blog_com_zola/nova_img.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+
+  /* Em mobile, background-attachment: fixed causa artefatos */
+  @media (max-width: 768px) {
+    .bg-site {
+      background-attachment: scroll;
+    }
+  }
+}
+
+/* ─────────────────────────────────────────────
+   COMPONENTES: identidade Industrial Retro-Futurista
+───────────────────────────────────────────── */
+@layer components {
+
+  /* Botão estilo neon: borda aqua, texto aqua → fill no hover */
+  .btn-neon {
+    @apply inline-block bg-transparent border border-aqua-neon text-aqua-neon
+           font-heading uppercase tracking-widest text-sm px-5 py-2
+           transition-all duration-200
+           hover:bg-aqua-neon hover:text-deep-shadow;
+  }
+
+  /* Card industrial com fundo steel-blue e borda cobre */
+  .card-industrial {
+    @apply bg-steel-blue/80 border border-rust-copper/40 rounded-sm
+           transition-all duration-300
+           hover:border-aqua-neon/70 hover:shadow-lg hover:shadow-aqua-neon/10;
+  }
+
+  /* Separador horizontal no estilo industrial */
+  .divider-industrial {
+    @apply border-t border-rust-copper/40 my-6;
+  }
+
+  /* Acento decorativo: linha aqua sob títulos */
+  .accent-line {
+    @apply block w-12 h-0.5 bg-aqua-neon mt-2 mb-6;
+  }
+
+  /* ── PROSE: estilos para o conteúdo dos posts ── */
+  .prose-blog p {
+    @apply text-clay-tan/90 leading-relaxed mb-4;
+  }
+
+  .prose-blog h1 {
+    @apply font-heading text-2xl font-bold text-clay-tan uppercase tracking-wide
+           border-b border-rust-copper pb-2 mt-8 mb-4;
+  }
+
+  .prose-blog h2 {
+    @apply font-heading text-xl font-semibold text-clay-tan uppercase tracking-wide
+           border-b border-rust-copper/50 pb-2 mt-6 mb-3;
+  }
+
+  .prose-blog h3 {
+    @apply font-heading text-lg font-medium text-aqua-neon uppercase tracking-wide
+           mt-4 mb-2;
+  }
+
+  .prose-blog h4,
+  .prose-blog h5,
+  .prose-blog h6 {
+    @apply font-heading text-base font-medium text-clay-tan mt-4 mb-2;
+  }
+
+  .prose-blog a {
+    @apply text-aqua-neon underline underline-offset-2
+           hover:text-clay-tan transition-colors duration-200;
+  }
+
+  .prose-blog strong {
+    @apply text-clay-tan font-semibold;
+  }
+
+  .prose-blog em {
+    @apply text-clay-tan/80 italic;
+  }
+
+  .prose-blog ul {
+    @apply list-disc list-outside pl-5 mb-4 space-y-1;
+  }
+
+  .prose-blog ol {
+    @apply list-decimal list-outside pl-5 mb-4 space-y-1;
+  }
+
+  .prose-blog li {
+    @apply text-clay-tan/90 leading-relaxed;
+  }
+
+  /* Inline code */
+  .prose-blog code {
+    @apply bg-steel-blue text-aqua-neon font-mono text-sm
+           px-1.5 py-0.5 rounded-sm;
+  }
+
+  /* Code blocks */
+  .prose-blog pre {
+    @apply bg-steel-blue border border-rust-copper/40 rounded-sm
+           p-4 overflow-x-auto mb-4;
+  }
+
+  .prose-blog pre code {
+    @apply bg-transparent px-0 py-0 text-clay-tan/90 text-sm;
+  }
+
+  .prose-blog blockquote {
+    @apply border-l-4 border-aqua-neon pl-4 my-4 italic text-clay-tan/70;
+  }
+
+  .prose-blog img {
+    @apply max-w-full rounded-sm border border-rust-copper/30 my-4;
+  }
+
+  .prose-blog table {
+    @apply w-full border-collapse mb-4;
+  }
+
+  .prose-blog th {
+    @apply font-heading text-aqua-neon text-sm uppercase tracking-widest
+           border border-rust-copper/40 bg-steel-blue px-3 py-2 text-left;
+  }
+
+  .prose-blog td {
+    @apply border border-rust-copper/20 px-3 py-2 text-clay-tan/80 text-sm;
+  }
+
+  .prose-blog hr {
+    @apply border-rust-copper/40 my-8;
+  }
+}

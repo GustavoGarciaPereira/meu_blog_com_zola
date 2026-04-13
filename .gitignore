@@ -1,1 +1,13 @@
 .vscode
+
+# Zola
+public/
+
+# Node / Tailwind
+node_modules/
+# Gerado automaticamente pelo CI (npm run css:build) — não commitar
+static/css/style.css
+
+# OS
+.DS_Store
+Thumbs.db

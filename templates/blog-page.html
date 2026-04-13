@@ -1,11 +1,60 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  {{ page.title }}
-</h1>
-<p class="subtitle"><strong>{{ page.date }}</strong></p>
-{{ page.content | safe }}
+<article>
 
-<p>Click <a href="{{ get_url(path='@/blog/_index.md') }}">here</a> Para ler mais.</p>
+  <!-- Cabeçalho do post -->
+  <header class="mb-8">
+    <h1 class="font-heading text-4xl font-bold text-clay-tan uppercase tracking-wide leading-tight mb-4">
+      {{ page.title }}
+    </h1>
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-px bg-aqua-neon"></div>
+      <time class="font-code text-aqua-neon text-xs tracking-widest">{{ page.date }}</time>
+    </div>
+    <div class="divider-industrial"></div>
+  </header>
+
+  <!-- ── Painel de Telemetria (Status Panel) ─────────────── -->
+  <div class="status-panel mb-6 flex flex-wrap items-center gap-x-6 gap-y-1
+              border border-rust-copper/40 bg-steel-blue/40 px-4 py-2 rounded-sm">
+
+    <span class="font-heading text-xs uppercase tracking-widest">
+      <span class="text-rust-copper">DATE:&nbsp;</span>
+      <span class="text-aqua-neon">
+        {%- if page.date -%}
+          {{ page.date | date(format="%Y.%m.%d") }}
+        {%- else -%}
+          N/A
+        {%- endif -%}
+      </span>
+    </span>
+
+    <span class="font-heading text-xs uppercase tracking-widest">
+      <span class="text-rust-copper">LATENCY:&nbsp;</span>
+      <span class="text-aqua-neon">{{ page.extra.latency | default(value="--") }}</span>
+    </span>
+
+    <span class="font-heading text-xs uppercase tracking-widest">
+      <span class="text-rust-copper">STATUS:&nbsp;</span>
+      <span class="text-aqua-neon">{{ page.extra.status | default(value="ONLINE") }}</span>
+    </span>
+
+  </div>
+  <!-- ── Fim Painel de Telemetria ─────────────────────────── -->
+
+  <!-- Conteúdo do post — container isolado para contraste de leitura -->
+  <div class="leitura-container bg-deep-shadow/[.98] rounded-lg border border-rust-copper/20 p-8">
+    <div class="prose-blog max-w-none">
+      {{ page.content | safe }}
+    </div>
+  </div>
+
+  <footer class="mt-12 pt-6 border-t border-rust-copper/30">
+    <a href="{{ get_url(path='@/blog/_index.md') }}" class="btn-neon">
+      ← Ver todos os posts
+    </a>
+  </footer>
+
+</article>
 {% endblock content %}

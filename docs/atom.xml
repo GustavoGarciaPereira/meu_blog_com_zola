@@ -4,8 +4,174 @@
 	<link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/atom.xml" rel="self" type="application/atom+xml"/>
   <link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/"/>
 	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2024-06-18T00:00:00+00:00</updated>
+	<updated>2025-04-14T00:00:00+00:00</updated>
 	<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/atom.xml</id>
+	<entry xml:lang="en">
+		<title>O ciclo de vida de uma aplicação FastAPI — e por que ignorar isso quebra produção</title>
+		<published>2025-04-14T00:00:00+00:00</published>
+		<updated>2025-04-14T00:00:00+00:00</updated>
+		<link href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/fastapi-ciclo-de-vida/" type="text/html"/>
+		<id>https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/fastapi-ciclo-de-vida/</id>
+		<content type="html">&lt;p&gt;Quando você sobe um servidor FastAPI, muita coisa acontece antes de qualquer requisição chegar. E muito mais acontece depois que ela vai embora.&lt;&#x2F;p&gt;
+&lt;p&gt;Entender esse fluxo é o que separa uma API que &amp;quot;funciona no localhost&amp;quot; de uma que aguenta produção de verdade.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;visao-geral-do-fluxo&quot;&gt;Visão geral do fluxo&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;mermaid&quot; class=&quot;language-mermaid &quot;&gt;&lt;code class=&quot;language-mermaid&quot; data-lang=&quot;mermaid&quot;&gt;flowchart TD
+    A([① startup]) --&gt; B
+
+    subgraph STARTUP [&quot; &quot;]
+        B[&quot;lifespan (context manager)\ncódigo antes do yield executa aqui&quot;]
+        B --&gt; C[&quot;create_engine()\npool de conexões ao banco&quot;]
+        B --&gt; D[&quot;create_all(engine)\ncria tabelas no banco&quot;]
+    end
+
+    D --&gt; E([② requisição chega])
+    C --&gt; E
+
+    E --&gt; F
+
+    subgraph MIDDLEWARE [&quot; &quot;]
+        F[&quot;middleware\nCORS, autenticação, logging...&quot;]
+    end
+
+    F --&gt; G([③ dependency injection])
+
+    subgraph DI [&quot;Depends()&quot;]
+        G --&gt; H[&quot;get_session()\nabre Session → yield&quot;]
+        H --&gt; I[&quot;Session(engine)\nunidade de trabalho com o banco&quot;]
+    end
+
+    I --&gt; J([④ endpoint executa\nsession injetada])
+
+    subgraph ENDPOINT [&quot; &quot;]
+        J --&gt; K[&quot;def create_hero &#x2F; read_heroes &#x2F; delete_hero ...\nsession.add() · session.exec() · session.delete() · session.commit()&quot;]
+    end
+
+    K --&gt; L[(&quot;banco de dados (SQLite &#x2F; PostgreSQL...)\nSQL gerado pelo SQLModel &#x2F; SQLAlchemy&quot;)]
+    L --&gt; K
+
+    K --&gt; M([⑤ resposta + fechamento da sessão])
+
+    subgraph RESPONSE [&quot; &quot;]
+        M --&gt; N[&quot;session.close()\napós yield, ao fim da request&quot;]
+        M --&gt; O[&quot;response_model\nPydantic serializa a saída&quot;]
+        N --&gt; P[&quot;JSON response → cliente\nstatus code + headers + body&quot;]
+        O --&gt; P
+    end
+
+    P --&gt; Q([⑥ shutdown])
+
+    subgraph SHUTDOWN [&quot; &quot;]
+        Q --&gt; R[&quot;lifespan — após o yield\nlibera recursos, fecha conexões&quot;]
+    end
+
+    style B fill:#1D9E75,color:#E1F5EE,stroke:#0F6E56
+    style C fill:#1D9E75,color:#E1F5EE,stroke:#0F6E56
+    style D fill:#1D9E75,color:#E1F5EE,stroke:#0F6E56
+    style F fill:#888780,color:#F1EFE8,stroke:#5F5E5A
+    style H fill:#378ADD,color:#E6F1FB,stroke:#185FA5
+    style I fill:#378ADD,color:#E6F1FB,stroke:#185FA5
+    style K fill:#378ADD,color:#E6F1FB,stroke:#185FA5
+    style L fill:#BA7517,color:#FAEEDA,stroke:#854F0B
+    style N fill:#378ADD,color:#E6F1FB,stroke:#185FA5
+    style O fill:#378ADD,color:#E6F1FB,stroke:#185FA5
+    style P fill:#888780,color:#F1EFE8,stroke:#5F5E5A
+    style R fill:#1D9E75,color:#E1F5EE,stroke:#0F6E56
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;o-ciclo-completo-do-boot-ao-shutdown&quot;&gt;O ciclo completo — do boot ao shutdown&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;1-startup-o-motor-liga&quot;&gt;1. Startup — o motor liga&lt;&#x2F;h3&gt;
+&lt;p&gt;Antes da primeira requisição, o FastAPI executa o bloco de &lt;strong&gt;startup&lt;&#x2F;strong&gt; do &lt;code&gt;lifespan&lt;&#x2F;code&gt;. É aqui que tudo que a aplicação precisa para funcionar deve ser inicializado:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;A engine de banco de dados é criada (&lt;code&gt;create_engine&lt;&#x2F;code&gt;) — &lt;strong&gt;uma única vez&lt;&#x2F;strong&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;As tabelas são verificadas (&lt;code&gt;create_all&lt;&#x2F;code&gt;)&lt;&#x2F;li&gt;
+&lt;li&gt;O middleware é configurado (CORS, logs, autenticação)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Se o banco estiver inacessível, você quer saber &lt;strong&gt;agora&lt;&#x2F;strong&gt;, não na primeira requisição do seu usuário.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # startup
+    await verify_db_connection()
+    yield
+    # shutdown
+    await engine.dispose()
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;2-requisicao-chega-o-middleware-age-primeiro&quot;&gt;2. Requisição chega — o middleware age primeiro&lt;&#x2F;h3&gt;
+&lt;p&gt;Toda requisição passa pelo &lt;strong&gt;middleware&lt;&#x2F;strong&gt; antes de chegar ao seu endpoint. É aqui que você:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Valida headers de autenticação&lt;&#x2F;li&gt;
+&lt;li&gt;Registra logs de acesso&lt;&#x2F;li&gt;
+&lt;li&gt;Bloqueia origens não autorizadas (CORS)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;O middleware não é opcional — é a primeira linha de defesa da sua API.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;3-dependency-injection-get-session-entra-em-cena&quot;&gt;3. Dependency Injection — &lt;code&gt;get_session()&lt;&#x2F;code&gt; entra em cena&lt;&#x2F;h3&gt;
+&lt;p&gt;O FastAPI cria uma &lt;strong&gt;sessão de banco de dados isolada&lt;&#x2F;strong&gt; para aquela requisição através do sistema de dependências:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;async def get_session() -&gt; AsyncGenerator[AsyncSession, None]:
+    async with AsyncSessionLocal() as session:
+        try:
+            yield session
+            await session.commit()
+        except Exception:
+            await session.rollback()
+            raise
+        finally:
+            await session.close()  # sempre fechada, inclusive em erros
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;A sessão é injetada automaticamente no seu endpoint e &lt;strong&gt;garantidamente fechada&lt;&#x2F;strong&gt; ao final — mesmo que uma exceção aconteça no meio do caminho.&lt;&#x2F;p&gt;
+&lt;p&gt;Esse detalhe parece pequeno. Em produção com tráfego, é a diferença entre uma API estável e uma que vai caindo aos poucos por vazamento de conexões.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;4-seu-endpoint-executa&quot;&gt;4. Seu endpoint executa&lt;&#x2F;h3&gt;
+&lt;p&gt;Com a sessão pronta e as dependências resolvidas, seu endpoint finalmente roda:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Recebe os dados já &lt;strong&gt;validados pelo Pydantic&lt;&#x2F;strong&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Executa a lógica de negócio&lt;&#x2F;li&gt;
+&lt;li&gt;Retorna um &lt;code&gt;response_model&lt;&#x2F;code&gt; tipado&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;5-shutdown-limpeza-garantida&quot;&gt;5. Shutdown — limpeza garantida&lt;&#x2F;h3&gt;
+&lt;p&gt;Quando a aplicação encerra (deploy, restart, SIGTERM), o FastAPI executa o bloco após o &lt;code&gt;yield&lt;&#x2F;code&gt; no &lt;code&gt;lifespan&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Conexões de banco são fechadas corretamente&lt;&#x2F;li&gt;
+&lt;li&gt;Modelos de ML são descarregados da memória&lt;&#x2F;li&gt;
+&lt;li&gt;Conexões Redis são encerradas&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Nada fica pendurado. Nenhum processo órfão. Nenhuma conexão aberta no banco apontando para um servidor que não existe mais.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;por-que-isso-importa-em-producao&quot;&gt;Por que isso importa em produção?&lt;&#x2F;h2&gt;
+&lt;p&gt;Parece teoria, mas cada ponto tem uma consequência prática muito concreta:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Sessões de banco bem gerenciadas&lt;&#x2F;strong&gt; evitam connection pool esgotado. Sem isso, com 50 requisições simultâneas cada uma abrindo sua própria engine, você pode chegar facilmente a 750 conexões abertas no PostgreSQL — e o banco começa a recusar novas conexões.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Middleware centralizado&lt;&#x2F;strong&gt; garante que lógica transversal (autenticação, logs, CORS) não vaza para dentro dos endpoints. Endpoints só devem fazer uma coisa.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Dependency Injection por-request&lt;&#x2F;strong&gt; garante isolamento entre requisições. Sem isso, você corre o risco de uma sessão SQLAlchemy ser compartilhada entre threads — e SQLAlchemy Session não é thread-safe.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Shutdown correto&lt;&#x2F;strong&gt; evita dados corrompidos em deploys. Transações em andamento têm chance de completar. Conexões são encerradas de forma limpa.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;o-erro-mais-comum-que-vejo&quot;&gt;O erro mais comum que vejo&lt;&#x2F;h2&gt;
+&lt;p&gt;Devs abrindo sessão de banco &lt;strong&gt;dentro do endpoint&lt;&#x2F;strong&gt;, sem garantia de fechar:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;# não faça isso
+@router.get(&quot;&#x2F;users&quot;)
+def list_users():
+    engine = create_engine(DATABASE_URL)  # nova engine por request!
+    session = Session(engine)
+    return session.query(User).all()
+    # sessão nunca é fechada
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Em desenvolvimento, funciona. Em produção com volume, isso vira vazamento de conexão — e a aplicação vai caindo aos poucos enquanto você tenta entender o que está acontecendo.&lt;&#x2F;p&gt;
+&lt;p&gt;A solução é um simples &lt;code&gt;get_session()&lt;&#x2F;code&gt; como dependência:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;@router.get(&quot;&#x2F;users&quot;, response_model=list[UserResponse])
+async def list_users(session: AsyncSession = Depends(get_session)):
+    result = await session.execute(select(User))
+    return result.scalars().all()
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;resumo&quot;&gt;Resumo&lt;&#x2F;h2&gt;
+&lt;p&gt;O ciclo de vida do FastAPI não é detalhe de documentação. É o contrato de estabilidade da sua aplicação.&lt;&#x2F;p&gt;
+&lt;p&gt;Entender o fluxo uma vez — startup, middleware, dependency injection, endpoint, shutdown — muda a forma como você escreve cada linha de código. Você para de pensar em &amp;quot;fazer funcionar&amp;quot; e começa a pensar em &amp;quot;funcionar sob carga&amp;quot;.&lt;&#x2F;p&gt;
+&lt;p&gt;Se você nunca estudou o &lt;code&gt;lifespan&lt;&#x2F;code&gt; a fundo, esse é o próximo passo. Não é complexo. É só entender o fluxo uma vez.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;&lt;em&gt;Encontrou um problema parecido no seu projeto? Me conta nos comentários.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+</content>
+	</entry>
 	<entry xml:lang="en">
 		<title>Descubra o Número Único em uma Lista: Soluções com e sem XOR</title>
 		<published>2024-06-18T00:00:00+00:00</published>

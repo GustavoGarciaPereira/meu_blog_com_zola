@@ -170,6 +170,22 @@
 
 </article>
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+  document.addEventListener('DOMContentLoaded', function () {
+    // Zola renders ```mermaid as <pre><code class="language-mermaid">
+    // Mermaid.js needs <div class="mermaid"> — convert them
+    document.querySelectorAll('pre code.language-mermaid').forEach(function (code) {
+      var div = document.createElement('div');
+      div.className = 'mermaid';
+      div.textContent = code.textContent;
+      code.parentElement.replaceWith(div);
+    });
+    mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+  });
+</script>
+
     </main>
 
     <!-- Command Palette -->

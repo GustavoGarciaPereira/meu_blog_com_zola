@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MyBlog</title>
+    <link rel="icon" type="image/x-icon" href="https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;favicon.ico">
+
+    <!-- Google Fonts: Oswald (headers) · Montserrat (body) · Fira Code (mono/console) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Oswald:wght@400;500;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS compilado -->
+    <link rel="stylesheet" href="https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;css/style.css">
+
+    <!-- BASE_URL global para search.js (| safe impede escaping de '/' → '&#x2F;') -->
+    <script>var BASE_URL = "https://gustavogarciapereira.github.io/meu_blog_com_zola/";</script>
+
+    <!-- Web Push -->
+    <script charset="UTF-8" src="//web.webpushs.com/js/push/939e2182ad02279e75eae0ea7b3794fb_1.js" async></script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0NC0GBBD5W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-0NC0GBBD5W');
+    </script>
+  </head>
+  <body class="bg-site bg-deep-shadow text-clay-tan font-body min-h-screen">
+
+    <!-- ══════════════════════════════════════════════════════
+         NAVBAR
+         ══════════════════════════════════════════════════════ -->
+    <header class="sticky top-0 z-40 border-b border-rust-copper/20 bg-deep-shadow/90 backdrop-blur-sm">
+      <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+
+        <a href="https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;"
+           class="font-code text-xs tracking-widest text-aqua-neon/70 transition-colors hover:text-aqua-neon">
+          // SISTEMA_ONLINE
+        </a>
+
+        <button onclick="window.openSearchModal && window.openSearchModal()"
+                aria-label="Abrir busca (⌘K)"
+                class="flex items-center gap-2 rounded-sm border border-rust-copper/50 px-3 py-1.5
+                       font-code text-xs text-rust-copper transition-all duration-200
+                       hover:border-aqua-neon/60 hover:text-aqua-neon">
+          <span>// BUSCAR...</span>
+          <kbd class="rounded-sm bg-rust-copper/10 px-1 py-0.5 font-code text-[10px] leading-none">⌘K</kbd>
+        </button>
+
+      </div>
+    </header>
+    <!-- ══ FIM NAVBAR ══ -->
+
+    <!-- ══════════════════════════════════════════════════════
+         MODAL DE BUSCA — Command Palette (Cmd+K / Ctrl+K / /)
+         ══════════════════════════════════════════════════════ -->
+    <div id="search-modal"
+         class="hidden fixed inset-0 z-50 flex items-start justify-center pt-[12vh] px-4"
+         role="dialog" aria-modal="true" aria-label="Busca no sistema" aria-hidden="true">
+
+      <!-- Backdrop com blur -->
+      <div class="absolute inset-0 bg-deep-shadow/80 backdrop-blur-sm"></div>
+
+      <!-- Painel CRT ──────────────────────────────────────── -->
+      <div class="relative w-full max-w-xl overflow-hidden rounded-sm
+                  border border-aqua-neon/60 bg-deep-shadow/95
+                  shadow-2xl shadow-aqua-neon/10">
+
+        <!-- Overlay de scanlines (efeito monitor CRT) -->
+        <div class="scanlines absolute inset-0 z-10 pointer-events-none"></div>
+
+        <!-- Barra de título do modal -->
+        <div class="flex items-center justify-between border-b border-rust-copper/40 px-4 py-2">
+          <span class="font-code text-xs tracking-widest text-aqua-neon/70">
+            // SYSTEM_SEARCH_v1.0
+          </span>
+          <button id="search-close"
+                  aria-label="Fechar busca"
+                  class="font-code text-xs text-clay-tan/40 transition-colors hover:text-clay-tan">
+            [ESC]
+          </button>
+        </div>
+
+        <!-- Campo de busca -->
+        <div class="flex items-center gap-2 border-b border-rust-copper/30 px-4 py-3">
+          <span class="select-none whitespace-nowrap font-code text-xs text-rust-copper">
+            // BUSCAR_NO_SISTEMA &gt;
+          </span>
+          <input id="search-input"
+                 type="text"
+                 autocomplete="off"
+                 spellcheck="false"
+                 placeholder="digite sua busca..."
+                 class="flex-1 bg-transparent font-code text-sm text-clay-tan
+                        placeholder:text-clay-tan/25 outline-none caret-aqua-neon">
+        </div>
+
+        <!-- Área de resultados -->
+        <div id="search-results" class="max-h-72 overflow-y-auto"></div>
+
+        <!-- Rodapé com hints de teclado -->
+        <div class="flex gap-5 border-t border-rust-copper/20 px-4 py-2">
+          <span class="font-code text-xs text-clay-tan/30">↵&nbsp;navegar</span>
+          <span class="font-code text-xs text-clay-tan/30">esc&nbsp;fechar</span>
+          <span class="font-code text-xs text-clay-tan/30">⌘K&nbsp;·&nbsp;/&nbsp;abrir</span>
+        </div>
+
+      </div>
+    </div>
+    <!-- ══ FIM MODAL ══ -->
+
+    <main class="relative z-10 mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
+      
+<article>
+
+  <!-- Cabeçalho do post -->
+  <header class="mb-8">
+    <h1 class="font-heading text-4xl font-bold text-clay-tan uppercase tracking-wide leading-tight mb-4">
+      O ciclo de vida de uma aplicação FastAPI — e por que ignorar isso quebra produção
+    </h1>
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-px bg-aqua-neon"></div>
+      <time class="font-code text-aqua-neon text-xs tracking-widest">2025-04-14</time>
+    </div>
+    <div class="divider-industrial"></div>
+  </header>
+
+  <!-- ── Painel de Telemetria (Status Panel) ─────────────── -->
+  <div class="status-panel mb-6 flex flex-wrap items-center gap-x-6 gap-y-1
+              border border-rust-copper/40 bg-steel-blue/40 px-4 py-2 rounded-sm">
+
+    <span class="font-heading text-xs uppercase tracking-widest">
+      <span class="text-rust-copper">DATE:&nbsp;</span>
+      <span class="text-aqua-neon">2025.04.14</span>
+    </span>
+
+    <span class="font-heading text-xs uppercase tracking-widest">
+      <span class="text-rust-copper">LATENCY:&nbsp;</span>
+      <span class="text-aqua-neon">--</span>
+    </span>
+
+    <span class="font-heading text-xs uppercase tracking-widest">
+      <span class="text-rust-copper">STATUS:&nbsp;</span>
+      <span class="text-aqua-neon">ONLINE</span>
+    </span>
+
+  </div>
+  <!-- ── Fim Painel de Telemetria ─────────────────────────── -->
+
+  <!-- Conteúdo do post — container isolado para contraste de leitura -->
+  <div class="leitura-container bg-deep-shadow/[.98] rounded-lg border border-rust-copper/20 p-8">
+    <div class="prose-blog max-w-none">
+      <p>Quando você sobe um servidor FastAPI, muita coisa acontece antes de qualquer requisição chegar. E muito mais acontece depois que ela vai embora.</p>
+<p>Entender esse fluxo é o que separa uma API que &quot;funciona no localhost&quot; de uma que aguenta produção de verdade.</p>
+<hr />
+<h2 id="visao-geral-do-fluxo">Visão geral do fluxo</h2>
+<pre data-lang="mermaid" class="language-mermaid "><code class="language-mermaid" data-lang="mermaid">flowchart TD
+    A([① startup]) --> B
+
+    subgraph STARTUP [" "]
+        B["lifespan (context manager)\ncódigo antes do yield executa aqui"]
+        B --> C["create_engine()\npool de conexões ao banco"]
+        B --> D["create_all(engine)\ncria tabelas no banco"]
+    end
+
+    D --> E([② requisição chega])
+    C --> E
+
+    E --> F
+
+    subgraph MIDDLEWARE [" "]
+        F["middleware\nCORS, autenticação, logging..."]
+    end
+
+    F --> G([③ dependency injection])
+
+    subgraph DI ["Depends()"]
+        G --> H["get_session()\nabre Session → yield"]
+        H --> I["Session(engine)\nunidade de trabalho com o banco"]
+    end
+
+    I --> J([④ endpoint executa\nsession injetada])
+
+    subgraph ENDPOINT [" "]
+        J --> K["def create_hero / read_heroes / delete_hero ...\nsession.add() · session.exec() · session.delete() · session.commit()"]
+    end
+
+    K --> L[("banco de dados (SQLite / PostgreSQL...)\nSQL gerado pelo SQLModel / SQLAlchemy")]
+    L --> K
+
+    K --> M([⑤ resposta + fechamento da sessão])
+
+    subgraph RESPONSE [" "]
+        M --> N["session.close()\napós yield, ao fim da request"]
+        M --> O["response_model\nPydantic serializa a saída"]
+        N --> P["JSON response → cliente\nstatus code + headers + body"]
+        O --> P
+    end
+
+    P --> Q([⑥ shutdown])
+
+    subgraph SHUTDOWN [" "]
+        Q --> R["lifespan — após o yield\nlibera recursos, fecha conexões"]
+    end
+
+    style B fill:#1D9E75,color:#E1F5EE,stroke:#0F6E56
+    style C fill:#1D9E75,color:#E1F5EE,stroke:#0F6E56
+    style D fill:#1D9E75,color:#E1F5EE,stroke:#0F6E56
+    style F fill:#888780,color:#F1EFE8,stroke:#5F5E5A
+    style H fill:#378ADD,color:#E6F1FB,stroke:#185FA5
+    style I fill:#378ADD,color:#E6F1FB,stroke:#185FA5
+    style K fill:#378ADD,color:#E6F1FB,stroke:#185FA5
+    style L fill:#BA7517,color:#FAEEDA,stroke:#854F0B
+    style N fill:#378ADD,color:#E6F1FB,stroke:#185FA5
+    style O fill:#378ADD,color:#E6F1FB,stroke:#185FA5
+    style P fill:#888780,color:#F1EFE8,stroke:#5F5E5A
+    style R fill:#1D9E75,color:#E1F5EE,stroke:#0F6E56
+</code></pre>
+<hr />
+<h2 id="o-ciclo-completo-do-boot-ao-shutdown">O ciclo completo — do boot ao shutdown</h2>
+<h3 id="1-startup-o-motor-liga">1. Startup — o motor liga</h3>
+<p>Antes da primeira requisição, o FastAPI executa o bloco de <strong>startup</strong> do <code>lifespan</code>. É aqui que tudo que a aplicação precisa para funcionar deve ser inicializado:</p>
+<ul>
+<li>A engine de banco de dados é criada (<code>create_engine</code>) — <strong>uma única vez</strong></li>
+<li>As tabelas são verificadas (<code>create_all</code>)</li>
+<li>O middleware é configurado (CORS, logs, autenticação)</li>
+</ul>
+<p>Se o banco estiver inacessível, você quer saber <strong>agora</strong>, não na primeira requisição do seu usuário.</p>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python">@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # startup
+    await verify_db_connection()
+    yield
+    # shutdown
+    await engine.dispose()
+</code></pre>
+<hr />
+<h3 id="2-requisicao-chega-o-middleware-age-primeiro">2. Requisição chega — o middleware age primeiro</h3>
+<p>Toda requisição passa pelo <strong>middleware</strong> antes de chegar ao seu endpoint. É aqui que você:</p>
+<ul>
+<li>Valida headers de autenticação</li>
+<li>Registra logs de acesso</li>
+<li>Bloqueia origens não autorizadas (CORS)</li>
+</ul>
+<p>O middleware não é opcional — é a primeira linha de defesa da sua API.</p>
+<hr />
+<h3 id="3-dependency-injection-get-session-entra-em-cena">3. Dependency Injection — <code>get_session()</code> entra em cena</h3>
+<p>O FastAPI cria uma <strong>sessão de banco de dados isolada</strong> para aquela requisição através do sistema de dependências:</p>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python">async def get_session() -> AsyncGenerator[AsyncSession, None]:
+    async with AsyncSessionLocal() as session:
+        try:
+            yield session
+            await session.commit()
+        except Exception:
+            await session.rollback()
+            raise
+        finally:
+            await session.close()  # sempre fechada, inclusive em erros
+</code></pre>
+<p>A sessão é injetada automaticamente no seu endpoint e <strong>garantidamente fechada</strong> ao final — mesmo que uma exceção aconteça no meio do caminho.</p>
+<p>Esse detalhe parece pequeno. Em produção com tráfego, é a diferença entre uma API estável e uma que vai caindo aos poucos por vazamento de conexões.</p>
+<hr />
+<h3 id="4-seu-endpoint-executa">4. Seu endpoint executa</h3>
+<p>Com a sessão pronta e as dependências resolvidas, seu endpoint finalmente roda:</p>
+<ul>
+<li>Recebe os dados já <strong>validados pelo Pydantic</strong></li>
+<li>Executa a lógica de negócio</li>
+<li>Retorna um <code>response_model</code> tipado</li>
+</ul>
+<hr />
+<h3 id="5-shutdown-limpeza-garantida">5. Shutdown — limpeza garantida</h3>
+<p>Quando a aplicação encerra (deploy, restart, SIGTERM), o FastAPI executa o bloco após o <code>yield</code> no <code>lifespan</code>:</p>
+<ul>
+<li>Conexões de banco são fechadas corretamente</li>
+<li>Modelos de ML são descarregados da memória</li>
+<li>Conexões Redis são encerradas</li>
+</ul>
+<p>Nada fica pendurado. Nenhum processo órfão. Nenhuma conexão aberta no banco apontando para um servidor que não existe mais.</p>
+<hr />
+<h2 id="por-que-isso-importa-em-producao">Por que isso importa em produção?</h2>
+<p>Parece teoria, mas cada ponto tem uma consequência prática muito concreta:</p>
+<p><strong>Sessões de banco bem gerenciadas</strong> evitam connection pool esgotado. Sem isso, com 50 requisições simultâneas cada uma abrindo sua própria engine, você pode chegar facilmente a 750 conexões abertas no PostgreSQL — e o banco começa a recusar novas conexões.</p>
+<p><strong>Middleware centralizado</strong> garante que lógica transversal (autenticação, logs, CORS) não vaza para dentro dos endpoints. Endpoints só devem fazer uma coisa.</p>
+<p><strong>Dependency Injection por-request</strong> garante isolamento entre requisições. Sem isso, você corre o risco de uma sessão SQLAlchemy ser compartilhada entre threads — e SQLAlchemy Session não é thread-safe.</p>
+<p><strong>Shutdown correto</strong> evita dados corrompidos em deploys. Transações em andamento têm chance de completar. Conexões são encerradas de forma limpa.</p>
+<hr />
+<h2 id="o-erro-mais-comum-que-vejo">O erro mais comum que vejo</h2>
+<p>Devs abrindo sessão de banco <strong>dentro do endpoint</strong>, sem garantia de fechar:</p>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python"># não faça isso
+@router.get("/users")
+def list_users():
+    engine = create_engine(DATABASE_URL)  # nova engine por request!
+    session = Session(engine)
+    return session.query(User).all()
+    # sessão nunca é fechada
+</code></pre>
+<p>Em desenvolvimento, funciona. Em produção com volume, isso vira vazamento de conexão — e a aplicação vai caindo aos poucos enquanto você tenta entender o que está acontecendo.</p>
+<p>A solução é um simples <code>get_session()</code> como dependência:</p>
+<pre data-lang="python" class="language-python "><code class="language-python" data-lang="python">@router.get("/users", response_model=list[UserResponse])
+async def list_users(session: AsyncSession = Depends(get_session)):
+    result = await session.execute(select(User))
+    return result.scalars().all()
+</code></pre>
+<hr />
+<h2 id="resumo">Resumo</h2>
+<p>O ciclo de vida do FastAPI não é detalhe de documentação. É o contrato de estabilidade da sua aplicação.</p>
+<p>Entender o fluxo uma vez — startup, middleware, dependency injection, endpoint, shutdown — muda a forma como você escreve cada linha de código. Você para de pensar em &quot;fazer funcionar&quot; e começa a pensar em &quot;funcionar sob carga&quot;.</p>
+<p>Se você nunca estudou o <code>lifespan</code> a fundo, esse é o próximo passo. Não é complexo. É só entender o fluxo uma vez.</p>
+<hr />
+<p><em>Encontrou um problema parecido no seu projeto? Me conta nos comentários.</em></p>
+
+    </div>
+  </div>
+
+  <footer class="mt-12 pt-6 border-t border-rust-copper/30">
+    <a href="https://gustavogarciapereira.github.io/meu_blog_com_zola/blog/" class="btn-neon">
+      ← Ver todos os posts
+    </a>
+  </footer>
+
+</article>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+  document.addEventListener('DOMContentLoaded', function () {
+    // Zola renders ```mermaid as <pre><code class="language-mermaid">
+    // Mermaid.js needs <div class="mermaid"> — convert them
+    document.querySelectorAll('pre code.language-mermaid').forEach(function (code) {
+      var div = document.createElement('div');
+      div.className = 'mermaid';
+      div.textContent = code.textContent;
+      code.parentElement.replaceWith(div);
+    });
+    mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+  });
+</script>
+
+    </main>
+
+    <!-- Command Palette -->
+    <script src="https:&#x2F;&#x2F;gustavogarciapereira.github.io&#x2F;meu_blog_com_zola&#x2F;js/search.js"></script>
+  </body>
+</html>

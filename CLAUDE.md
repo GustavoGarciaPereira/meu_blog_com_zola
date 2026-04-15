@@ -85,7 +85,7 @@ Templates em `templates/`:
 | `base.html` | Layout base — navbar sticky, modal Command Palette, Google Fonts, Tailwind CSS, Analytics |
 | `index.html` | Home page com hero "Industrial Retro-Futurista" |
 | `blog.html` | Listagem de posts em grid responsivo de cards |
-| `blog-page.html` | Post individual — cabeçalho, painel de telemetria automático, `.leitura-container` |
+| `blog-page.html` | Post individual — cabeçalho, painel de telemetria automático, `.leitura-container`, suporte a Mermaid |
 | `geogebra.html` | Post com Console de Simulação GeoGebra (barra de controle + indicador pulsante) |
 | `404.html` | Página de erro customizada |
 | `shortcodes/status.html` | Shortcode `{{ status(...) }}` — painel de telemetria para uso em Markdown |
@@ -158,6 +158,21 @@ Use `template = "geogebra.html"` para posts com visualizações matemáticas int
 
 Zola gera: `atom.xml` (feed), `sitemap.xml`, `robots.txt`, `search_index.en.js` + `elasticlunr.min.js` (usados pela Command Palette).
 
+### Diagramas Mermaid
+
+Suportado em posts via `blog-page.html`. Uso no Markdown:
+
+````markdown
+```mermaid
+flowchart TD
+    A --> B
+```
+````
+
+**Como funciona:** Zola renderiza blocos ` ```mermaid ``` ` como `<pre><code class="language-mermaid">`. O `blog-page.html` inclui um script que converte esses elementos para `<div class="mermaid">` e então chama `mermaid.init()` — necessário porque `startOnLoad: true` rodaria antes da conversão. Tema `dark` configurado para alinhar com a paleta do blog.
+
+O `geogebra.html` **não** inclui Mermaid — adicionar lá se necessário.
+
 ### Armadilhas Conhecidas
 
 | Problema | Causa | Solução |
@@ -166,3 +181,4 @@ Zola gera: `atom.xml` (feed), `sitemap.xml`, `robots.txt`, `search_index.en.js` 
 | `openModal()` retorna sem abrir | `DOMContentLoaded` já disparou quando script no fim do `<body>` | Usar `document.readyState === 'loading'` antes de registrar o listener |
 | Busca retorna sem resultados | `window.searchIndex` é JSON serializado, não objeto elasticlunr | Carregar com `elasticlunr.Index.load(window.searchIndex)` |
 | Classes de resultado removidas pelo purge | Tailwind não vê classes em strings JS concatenadas | Usar `safelist` no `tailwind.config.js` + incluir `static/js/**/*.js` em `content` |
+| Diagrama Mermaid não renderiza | Zola gera `<pre><code class="language-mermaid">`, mas Mermaid.js espera `<div class="mermaid">` | `blog-page.html` converte os elementos via JS antes de chamar `mermaid.init()` — nunca usar `startOnLoad: true` |

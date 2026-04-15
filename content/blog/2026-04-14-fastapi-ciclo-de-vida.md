@@ -2,6 +2,7 @@
 title = "O ciclo de vida de uma aplicação FastAPI — e por que ignorar isso quebra produção"
 date = 2025-04-14
 description = "A maioria dos devs sobe uma API FastAPI e vai direto para os endpoints. Mas antes de qualquer requisição chegar, muita coisa acontece — e entender esse fluxo separa uma API que funciona no localhost de uma que aguenta produção de verdade."
+draft = false
 +++
 
 Quando você sobe um servidor FastAPI, muita coisa acontece antes de qualquer requisição chegar. E muito mais acontece depois que ela vai embora.

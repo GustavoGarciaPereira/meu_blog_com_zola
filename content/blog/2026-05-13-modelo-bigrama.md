@@ -36,21 +36,21 @@ Se no conjunto de frases de treino a palavra "gato" é seguida muitas vezes por 
 
 A fórmula que você talvez tenha visto na aula de probabilidade é:
 
-\[
+$$
 P(A|B) = \frac{P(A \cap B)}{P(B)}
-\]
+$$
 
 Traduzindo para palavras:
 
-\[
+$$
 P(\text{próxima} \mid \text{anterior}) = \frac{\text{quantas vezes elas aparecem juntas}}{\text{quantas vezes a anterior aparece}}
-\]
+$$
 
 Se "gato" aparece 10 vezes no texto e, dessas, 7 vezes é seguido de "mia", então:
 
-\[
-P(\text{"mia"} \mid \text{"gato"}) = \frac{7}{10} = 0,7
-\]
+$$
+P(\text{"mia"} \mid \text{"gato"}) = \frac{7}{10} = 0{,}7
+$$
 
 É só isso! O modelo inteiro é uma tabela dessas probabilidades.
 
